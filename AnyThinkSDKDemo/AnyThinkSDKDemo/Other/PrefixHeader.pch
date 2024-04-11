@@ -43,8 +43,8 @@
 #define kButtonSafeHeight (IsiPhoneX ? 34.0f : .0f)
 
 
-#define kTopOnAppID @"a62b40f5778f3d"
-#define kTopOnAppKey @"c3d0d2a9a9d451b07e62b509659f7c97"
+#define kTopOnAppID @"a66139b008c636"
+#define kTopOnAppKey @"aed503d8200feb80e5ac7f005980f011f"
 
 #define KTopOnSplashSceneID @"f5e549727efc49"
 #define KTopOnBannerSceneID @"f5e549727efc49"

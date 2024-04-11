@@ -54,21 +54,7 @@
 - (NSDictionary<NSString *,NSString *> *)placementIDs {
     
     return @{
-        @"ADX":                   @"b62b419273e429",
-        @"All":                   @"b62b40ff8aed6a",
-        @"AdMob":                 @"b62e9ee8eb2d0b",
-        @"Kuaishou":              @"b62b41922b6663",
-        @"GDT":                   @"b62b41ef152d42",
-        @"Baidu":                 @"b62b41ef0b0e1b",
-        @"CSJ":                   @"b62b41eefa70a8",
-        @"Sigmob":                @"b62b41c8d7ac74",
-        @"Mintegral":             @"b62b41c7818614",
-        @"Cross Promotion":       @"b62b4192b9efaa",
-        @"Pangle":                @"b62b41521d52d1",
-        @"Klevin":                @"b62b415211bd15",
-        @"HeaderBidding":         @"b62b4126caa479",
-        @"Bigo":                @"b63909d7b39cac",
-        @"vungle":                @"b63a5518f4820c",
+        @"adVlion":               @"b1fh1t2hri6ojr",
     };
 }
 
