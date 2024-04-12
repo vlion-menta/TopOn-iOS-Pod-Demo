@@ -63,7 +63,7 @@
         self.customEvent.requestCompletionBlock = completion;
         self.customEvent.delegate = self.delegateToBePassed;
         
-        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:@"P0105"];
+        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:slotID];
         if (request) { //竞价失败不会进入该方法，所以处理竞价成功的逻辑
             if (request.customObject != nil) { // load secced 且 广告数据可用(原则上是检查广告是否可用的)
                 self.splashView = request.customObject;
@@ -139,7 +139,7 @@
     }
     NSString *appID = info[appIDKey];
     NSString *appKey = info[@"appKey"];
-    NSString *slotID = @"P0105";
+    NSString *slotID = info[@"slotID"];
     
     if ((!appID || !appKey || !slotID) && completion != nil) {
         NSError *err = [NSError errorWithDomain:@"com.menta.mediation.ios"
@@ -177,8 +177,10 @@
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
     NSLog(@"------> menta splash ad loss");
-    MentaUnifiedSplashAd *splashAd = (MentaUnifiedSplashAd *)customObject;
-    [splashAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
+    if ([customObject isKindOfClass:MentaUnifiedSplashAd.class]) {
+        MentaUnifiedSplashAd *splashAd = (MentaUnifiedSplashAd *)customObject;
+        [splashAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
+    }
 }
 
 #pragma mark - private method
