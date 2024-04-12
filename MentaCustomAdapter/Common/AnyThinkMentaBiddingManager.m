@@ -59,6 +59,7 @@
 - (void)startWithRequestItem:(AnyThinkMentaBiddingRequest *)request {
     
     [self.bidingAdStorageAccessor setObject:request forKey:request.unitID];
+    
     switch (request.adType) {
         case MentaAdFormatSplash: {
             // 获取代理
@@ -66,6 +67,9 @@
             delegate.placementID = request.unitID;
             [request.customObject setValue:delegate forKey:@"delegate"];
             [self savaBiddingDelegate:delegate withUnitID:request.unitID];
+            break;
+        }
+        case MentaAdFormatNativeExpress: {
             break;
         }
         default:
