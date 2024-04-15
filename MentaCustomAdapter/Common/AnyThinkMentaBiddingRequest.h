@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, MentaAdFormat) {
     MentaAdFormatSplash = 0,
-    MentaAdFormatNativeExpress,
+    MentaAdFormatNative,
 };
 
 @interface AnyThinkMentaBiddingRequest : NSObject

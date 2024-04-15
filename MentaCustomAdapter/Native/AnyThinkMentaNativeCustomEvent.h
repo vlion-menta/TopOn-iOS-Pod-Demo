@@ -10,10 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaNativeCustomEvent : ATNativeADCustomEvent <MentaUnifiedNativeExpressAdDelegate>
+@interface AnyThinkMentaNativeCustomEvent : ATNativeADCustomEvent <MentaUnifiedNativeExpressAdDelegate, MentaUnifiedNativeAdDelegate>
 
 - (void)nativeExpressAdLoadedWith:(MentaUnifiedNativeExpressAd *)nativeExpressAd
                nativeExpressAdObj:(MentaUnifiedNativeExpressAdObject *)nativeExpressAdObj;
+
+- (void)nativeAdLoadedWith:(MentaUnifiedNativeAd *)nativeAd
+               nativeAdObj:(MentaNativeObject *)nativeObj;
 
 @end
 

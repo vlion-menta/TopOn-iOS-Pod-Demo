@@ -18,6 +18,7 @@
     [dictionary setObject:value forKey:key];
 }
 
+// 模版渲染
 - (void)nativeExpressAdLoadedWith:(MentaUnifiedNativeExpressAd *)nativeExpressAd
                nativeExpressAdObj:(MentaUnifiedNativeExpressAdObject *)nativeExpressAdObj {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -37,6 +38,38 @@
         [AnyThinkMentaNativeCustomEvent dic:asset setValue:[NSString stringWithFormat:@"%lf",adSize.height] forKey:kATNativeADAssetsNativeExpressAdViewHeightKey];
         [assets addObject:asset];
         
+        [self trackNativeAdLoaded:assets];
+    });
+}
+
+// 自渲染
+- (void)nativeAdLoadedWith:(MentaUnifiedNativeAd *)nativeAd
+               nativeAdObj:(MentaNativeObject *)nativeObj {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableArray<NSDictionary*>* assets = [NSMutableArray<NSDictionary*> array];
+        NSMutableDictionary *asset = [NSMutableDictionary dictionary];
+        
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:self forKey:kATAdAssetsCustomEventKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj forKey:kATAdAssetsCustomObjectKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(0) forKey:kATNativeADAssetsIsExpressAdKey];
+        
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj.dataObject.title forKey:kATNativeADAssetsMainTitleKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj.dataObject.desc forKey:kATNativeADAssetsMainTextKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj.dataObject.iconUrl forKey:kATNativeADAssetsIconURLKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj.dataObject.materialList.firstObject.materialUrl forKey:kATNativeADAssetsImageURLKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:@"AdVlion" forKey:kATNativeADAssetsAdvertiserKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.isVideo) forKey:kATNativeADAssetsContainsVideoFlag];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj.dataObject.adIcon forKey:kATNativeADAssetsLogoImageKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:nativeObj.dataObject.price forKey:kATNativeADAssetsAppPriceKey];
+        if (nativeObj.dataObject.isVideo) {
+            CGFloat videoAspect = nativeObj.nativeAdView.videoWidth / nativeObj.nativeAdView.videoHeight;
+            [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(videoAspect) forKey:kATNativeADAssetsVideoAspectRatioKey];
+        } else {
+            [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialWidth) forKey:kATNativeADAssetsMainImageWidthKey];
+            [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialHeight) forKey:kATNativeADAssetsMainImageHeightKey];
+        }
+        
+        [assets addObject:asset];
         [self trackNativeAdLoaded:assets];
     });
 }
@@ -165,11 +198,44 @@
  */
 - (void)menta_nativeAdLoaded:(NSArray<MentaNativeObject *> * _Nullable)unifiedNativeAdDataObjects nativeAd:(MentaUnifiedNativeAd *_Nullable)nativeAd {
     NSLog(@"------> %s", __FUNCTION__);
+    
+    if (self.isC2SBiding) {
+        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
+        request.nativeAds = unifiedNativeAdDataObjects;
+        ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
+                                                  unitGroupUnitID:request.unitGroup.unitID
+                                               adapterClassString:request.unitGroup.adapterClassString
+                                                            price:unifiedNativeAdDataObjects.firstObject.dataObject.price.stringValue
+                                                     currencyType:ATBiddingCurrencyTypeCNY
+                                               expirationInterval:request.unitGroup.bidTokenTime
+                                                     customObject:nativeAd];
+        bidInfo.networkFirmID = request.unitGroup.networkFirmID;
+        self.isC2SBiding = NO;
+        
+        if (request.bidCompletion) {
+            request.bidCompletion(bidInfo, nil);
+        }
+    } else {
+        [self nativeAdLoadedWith:nativeAd nativeAdObj:unifiedNativeAdDataObjects.firstObject];
+    }
 }
 
 /// 信息流自渲染加载失败
 - (void)menta_nativeAd:(MentaUnifiedNativeAd *_Nonnull)nativeAd didFailWithError:(NSError * _Nullable)error description:(NSDictionary *_Nonnull)description {
     NSLog(@"------> %s", __FUNCTION__);
+    
+    NSError *err = [NSError errorWithDomain:@"com.menta.native"
+                                       code:100
+                                   userInfo:@{}];
+    if (self.isC2SBiding) {
+        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
+        if (request.bidCompletion) {
+            request.bidCompletion(nil, err);
+        }
+        [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:self.networkAdvertisingID];
+    } else {
+        [self trackNativeAdLoadFailed:err];
+    }
 }
 
 /**
@@ -179,6 +245,8 @@
  */
 - (void)menta_nativeAdViewWillExpose:(MentaUnifiedNativeAd *_Nullable)nativeAd adView:(UIView<MentaNativeAdViewProtocol> *_Nonnull)adView {
     NSLog(@"------> %s", __FUNCTION__);
+    
+    [self trackNativeAdImpression];
 }
 
 
@@ -188,6 +256,8 @@
  */
 - (void)menta_nativeAdViewDidClick:(MentaUnifiedNativeAd *_Nullable)nativeAd adView:(UIView<MentaNativeAdViewProtocol> *_Nullable)adView {
     NSLog(@"------> %s", __FUNCTION__);
+    
+    [self trackNativeAdClick];
 }
 
 /**
@@ -196,6 +266,9 @@
  */
 - (void)menta_nativeAdDidClose:(MentaUnifiedNativeAd *_Nonnull)nativeAd adView:(UIView<MentaNativeAdViewProtocol> *_Nullable)adView {
     NSLog(@"------> %s", __FUNCTION__);
+    
+    [self trackNativeAdClosed];
+    [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:self.networkAdvertisingID];
 }
 
 /**

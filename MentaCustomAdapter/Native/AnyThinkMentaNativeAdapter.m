@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) AnyThinkMentaNativeCustomEvent *customEvent;
 @property (nonatomic, strong) MentaUnifiedNativeExpressAd *nativeExpressAd;
+@property (nonatomic, strong) MentaUnifiedNativeAd *nativeAd;
 
 @end
 
@@ -66,9 +67,11 @@
                     strongSelf.customEvent.requestCompletionBlock = completion;
                     if (isExpress) {
                         strongSelf.nativeExpressAd = (MentaUnifiedNativeExpressAd *)request.customObject;
-                        [strongSelf.customEvent nativeExpressAdLoadedWith:request.customObject nativeExpressAdObj:request.nativeAds.firstObject];
+                        [strongSelf.customEvent nativeExpressAdLoadedWith:strongSelf.nativeExpressAd nativeExpressAdObj:request.nativeAds.firstObject];
                     } else {
-                        // todo 自渲染
+                        // 自渲染
+                        strongSelf.nativeAd = (MentaUnifiedNativeAd *)request.customObject;
+                        [strongSelf.customEvent nativeAdLoadedWith:strongSelf.nativeAd nativeAdObj:request.nativeAds.firstObject];
                     }
                     [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:slotID];
                     return;
@@ -91,7 +94,14 @@
                     
                     [strongSelf.nativeExpressAd loadAd];
                 } else {
-                    // todo 自渲染
+                    // 自渲染
+                    MUNativeConfig *config = [[MUNativeConfig alloc] init];
+                    config.slotId = slotID;
+                    
+                    strongSelf.nativeAd = [[MentaUnifiedNativeAd alloc] initWithConfig:config];
+                    strongSelf.nativeAd.delegate = strongSelf.customEvent;
+                    
+                    [strongSelf.nativeAd loadAd];
                 }
             }
         });
@@ -143,7 +153,7 @@
         request.bidCompletion = completion;
         request.unitID = slotID;
         request.extraInfo = info;
-        request.adType = MentaAdFormatNativeExpress;
+        request.adType = MentaAdFormatNative;
         
         if (isExpress) {
             CGSize adSize = CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) - 20.0, 300.0f);
@@ -161,7 +171,15 @@
             request.customObject = nativeExpressAd;
             [nativeExpressAd loadAd];
         } else {
-            // todo 自渲染
+            // 自渲染
+            MUNativeConfig *config = [[MUNativeConfig alloc] init];
+            config.slotId = slotID;
+            
+            MentaUnifiedNativeAd *nativeAd = [[MentaUnifiedNativeAd alloc] initWithConfig:config];
+            nativeAd.delegate = customEvent;
+            
+            request.customObject = nativeAd;
+            [nativeAd loadAd];
         }
         
         [[AnyThinkMentaBiddingManager sharedInstance] startWithRequestItem:request];
@@ -170,15 +188,18 @@
 
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
-    NSLog(@"------> menta native express ad win");
+    NSLog(@"------> menta native ad win");
 }
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
-    NSLog(@"------> menta native express ad loss");
+    NSLog(@"------> menta native ad loss");
     if ([customObject isKindOfClass:MentaUnifiedNativeExpressAd.class]) {
         MentaUnifiedNativeExpressAd *nativeExpressAd = (MentaUnifiedNativeExpressAd *)customObject;
         [nativeExpressAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
+    } else {
+        MentaUnifiedNativeAd *nativeAd = (MentaUnifiedNativeAd *)customObject;
+        [nativeAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
     }
 }
 

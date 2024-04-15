@@ -69,7 +69,7 @@
             [self savaBiddingDelegate:delegate withUnitID:request.unitID];
             break;
         }
-        case MentaAdFormatNativeExpress: {
+        case MentaAdFormatNative: {
             break;
         }
         default:

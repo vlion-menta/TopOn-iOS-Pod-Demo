@@ -30,13 +30,21 @@
     self.ADView.customEvent = customEvent;
 }
 
+- (UIView *)getNetWorkMediaView {
+    ATNativeADCache *cache = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd));
+    BOOL isExpress = [cache.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
+    if (!isExpress) {
+        MentaNativeObject *nativeAd = cache.assets[kATAdAssetsCustomObjectKey];
+        if (nativeAd.dataObject.isVideo) {
+            return nativeAd.nativeAdView.mediaView;
+        }
+    }
+    return nil;
+}
+
 -(void) renderOffer:(ATNativeADCache *)offer {
     [super renderOffer:offer];
     
-    UIViewController *rootVC = self.configuration.rootViewController;
-    if (rootVC == nil) {
-        rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
-    }
     BOOL isExpress = [offer.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
     if (isExpress) {
         MentaUnifiedNativeExpressAdObject *expressObj = offer.assets[kATAdAssetsCustomObjectKey];
@@ -47,13 +55,37 @@
         [self.ADView insertSubview:(UIView *)expressObj.expressView atIndex:0];
         
     } else {
-        
+        MentaNativeObject *nativeAd = offer.assets[kATAdAssetsCustomObjectKey];
+        nativeAd.nativeAdView.backgroundColor = self.ADView.backgroundColor;
+        [self.ADView setNeedsLayout];
+        [self.ADView layoutIfNeeded];
+        nativeAd.nativeAdView.frame = self.ADView.bounds;
+        [nativeAd registerClickableViews:[self.ADView clickableViews] closeableViews:@[]];
+        [self.ADView insertSubview:(UIView *)nativeAd.nativeAdView atIndex:0];
     }
+}
+
+- (BOOL)isVideoContents {
+    ATNativeADCache *cache = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd));
+    BOOL isExpress = [cache.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
+    if (!isExpress) {
+        MentaNativeObject *nativeAd = cache.assets[kATAdAssetsCustomObjectKey];
+        if (nativeAd.dataObject.isVideo) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (ATNativeAdRenderType)getCurrentNativeAdRenderType {
     ATNativeADCache *cache = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd));
-    return ATNativeAdRenderExpress;
+    BOOL isExpress = [cache.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
+    if (isExpress) {
+        return ATNativeAdRenderExpress;
+    } else {
+        return ATNativeAdRenderSelfRender;
+    }
 }
 
 - (void)dealloc {
