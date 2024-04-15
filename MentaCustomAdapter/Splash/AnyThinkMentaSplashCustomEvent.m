@@ -8,6 +8,12 @@
 
 #import "AnyThinkMentaSplashCustomEvent.h"
 
+@interface AnyThinkMentaSplashCustomEvent ()
+
+@property (nonatomic, assign) BOOL isReady;
+
+@end
+
 @implementation AnyThinkMentaSplashCustomEvent
 
 /// 开屏广告数据拉取成功

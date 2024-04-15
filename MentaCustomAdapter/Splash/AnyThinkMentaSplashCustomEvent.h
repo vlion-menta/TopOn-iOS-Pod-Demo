@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AnyThinkMentaSplashCustomEvent : ATSplashCustomEvent <MentaUnifiedSplashAdDelegate>
 
-@property (nonatomic, assign) BOOL isReady;
+@property (nonatomic, assign, readonly) BOOL isReady;
 
 @end
 
