@@ -48,7 +48,7 @@
     }
     // 从biddingManager 移除bidding 代理。
     [[AnyThinkMentaBiddingManager sharedInstance] removeBiddingDelegateWithUnitID:self.placementID];
-    NSLog(@"------> didFailWithError ");
+    NSLog(@"------> didFailWithError bidding %@", error);
 }
 
 /// 开屏广告被点击了

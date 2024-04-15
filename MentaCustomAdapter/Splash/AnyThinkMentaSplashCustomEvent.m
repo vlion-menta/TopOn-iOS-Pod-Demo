@@ -27,7 +27,7 @@
 - (void)menta_splashAd:(MentaUnifiedSplashAd *_Nonnull)splashAd didFailWithError:(NSError * _Nullable)error description:(NSDictionary *_Nonnull)description {
     self.isReady = NO;
     [self trackSplashAdLoadFailed:error];
-    NSLog(@"------> didFailWithError ");
+    NSLog(@"------> didFailWithError %@", error);
 }
 
 /// 开屏广告被点击了
