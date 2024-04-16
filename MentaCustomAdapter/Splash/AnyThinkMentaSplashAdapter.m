@@ -31,7 +31,9 @@
         NSString *appID = serverInfo[appIDKey];
         NSString *appKey = serverInfo[@"appKey"];
         
-        [AnyThinkMentaSplashAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+        if (![MUAPI isInitialized]) {
+            [AnyThinkMentaSplashAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+        }
     }
     return self;
 }

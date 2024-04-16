@@ -45,7 +45,9 @@
         NSString *appID = serverInfo[appIDKey];
         NSString *appKey = serverInfo[@"appKey"];
         
-        [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+        if (![MUAPI isInitialized]) {
+            [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+        }
     }
     return self;
 }
