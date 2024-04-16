@@ -123,10 +123,11 @@
     if (self.isC2SBiding) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
         request.nativeAds = @[nativeExpressAdObj];
-        ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID 
+        NSNumber *price = @(nativeExpressAdObj.price.doubleValue / 100.0);
+        ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:nativeExpressAdObj.price.stringValue
+                                                            price:price.stringValue
                                                      currencyType:ATBiddingCurrencyTypeCNY
                                                expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:nativeExpressAd];
@@ -202,10 +203,11 @@
     if (self.isC2SBiding) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
         request.nativeAds = unifiedNativeAdDataObjects;
+        NSNumber *price = @(unifiedNativeAdDataObjects.firstObject.dataObject.price.doubleValue / 100.0);
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:unifiedNativeAdDataObjects.firstObject.dataObject.price.stringValue
+                                                            price:price.stringValue
                                                      currencyType:ATBiddingCurrencyTypeCNY
                                                expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:nativeAd];

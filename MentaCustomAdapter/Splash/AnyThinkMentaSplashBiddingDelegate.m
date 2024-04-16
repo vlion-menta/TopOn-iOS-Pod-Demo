@@ -78,7 +78,7 @@
 
 /// 开屏广告 展现的广告信息 曝光之后会触发该回调
 - (void)menta_splashAd:(MentaUnifiedSplashAd *_Nonnull)splashAd bestTargetSourcePlatformInfo:(NSDictionary *_Nonnull)info {
-    self.biddingPrice = [NSString stringWithFormat:@"%.2f",[info[@"BEST_SOURCE_PRICE"] doubleValue]];
+    self.biddingPrice = [NSString stringWithFormat:@"%.2f",[info[@"BEST_SOURCE_PRICE"] doubleValue] / 100.0];
     NSLog(@"------> bestTargetSourcePlatformInfo");
 }
 

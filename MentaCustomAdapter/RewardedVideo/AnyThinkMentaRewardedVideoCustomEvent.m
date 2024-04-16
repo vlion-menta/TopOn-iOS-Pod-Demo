@@ -118,7 +118,7 @@
 /// 激励视频广告 展现的广告信息 曝光之前会触发该回调
 - (void)menta_rewardVideoAd:(MentaUnifiedRewardVideoAd *_Nonnull)rewardVideoAd bestTargetSourcePlatformInfo:(NSDictionary *_Nonnull)info {
     NSLog(@"------> %s", __FUNCTION__);
-    self.biddingPrice = [NSString stringWithFormat:@"%.2f",[info[@"BEST_SOURCE_PRICE"] doubleValue]];
+    self.biddingPrice = [NSString stringWithFormat:@"%.2f",[info[@"BEST_SOURCE_PRICE"] doubleValue] / 100.0];
 }
 
 - (void)dealloc {
