@@ -30,8 +30,8 @@
 - (void)menta_bannerAdMaterialDidLoad:(MentaUnifiedBannerAd *_Nonnull)bannerAd {
     NSLog(@"------> %s", __FUNCTION__);
     if (self.isC2SBiding && [bannerAd fetchBannerView]) {
-        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
-        ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID 
+        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.UUID];
+        ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
                                                             price:self.biddingPrice
@@ -54,11 +54,11 @@
     NSLog(@"------> %s", __FUNCTION__);
     
     if (self.isC2SBiding) {
-        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
+        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.UUID];
         if (request.bidCompletion) {
             request.bidCompletion(nil, error);
         }
-        [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:self.networkAdvertisingID];
+        [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:self.UUID];
     } else {
         [self trackBannerAdLoadFailed:error];
     }
@@ -74,6 +74,7 @@
 - (void)menta_bannerAdDidClose:(MentaUnifiedBannerAd *_Nonnull)bannerAd adView:(UIView *_Nullable)adView {
     NSLog(@"------> %s", __FUNCTION__);
     [self trackBannerAdClosed];
+    [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:self.UUID];
 }
 
 /// 横幅(banner)将要展现

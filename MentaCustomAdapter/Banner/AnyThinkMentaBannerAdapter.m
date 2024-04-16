@@ -49,26 +49,29 @@
     CGFloat width = [NSString stringWithFormat:@"%@", serverInfo[@"width"]].doubleValue;
     CGFloat height = [NSString stringWithFormat:@"%@", serverInfo[@"height"]].doubleValue;
     NSString *bidId = serverInfo[kATAdapterCustomInfoBuyeruIdKey];
+    NSString *requestUUID = serverInfo[@"tracking_info_request_id"];
     
     __weak typeof(self) weakSelf = self;
     void(^load)(void) = ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:slotID];
+            AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:requestUUID];
+            NSLog(@"------> bidding load success %@ - customevent %@", requestUUID, request.customEvent);
+            
             if (bidId && request != nil && request.customObject) {
-                strongSelf.customEvent = (AnyThinkMentaBannerCustomEvent *)request.customEvent;
-                strongSelf.customEvent.requestCompletionBlock = completion;
-                strongSelf.bannerAd = (MentaUnifiedBannerAd *)request.customObject;
-                if ([strongSelf.bannerAd fetchBannerView]) {
-                    [strongSelf.customEvent trackBannerAdLoaded:[strongSelf.bannerAd fetchBannerView] adExtra:nil];
+                AnyThinkMentaBannerCustomEvent *customEvent = (AnyThinkMentaBannerCustomEvent *)request.customEvent;
+                customEvent.requestCompletionBlock = completion;
+                MentaUnifiedBannerAd *bannerAd = (MentaUnifiedBannerAd *)request.customObject;
+                if ([bannerAd fetchBannerView]) {
+                    [customEvent trackBannerAdLoaded:[bannerAd fetchBannerView] adExtra:nil];
                 }
-                [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:slotID];
                 return;
             }
             
             strongSelf.customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
             strongSelf.customEvent.requestCompletionBlock = completion;
+            strongSelf.customEvent.UUID = requestUUID;
             
             MUBannerConfig *config = [[MUBannerConfig alloc] init];
             config.adSize = CGSizeMake(width, height); // adSize 设置多少 最后的banner显示区域就是多少 同时containerView的size 要与adsize保持一致
@@ -104,11 +107,13 @@
     NSString *slotID = info[@"slotID"];
     CGFloat width = [NSString stringWithFormat:@"%@", info[@"width"]].doubleValue;
     CGFloat height = [NSString stringWithFormat:@"%@", info[@"height"]].doubleValue;
+    NSString *requestUUID = info[@"tracking_info_request_id"];
     
     [AnyThinkMentaBannerAdapter initMentaSDKWith:appID Key:appKey completion:^{
         AnyThinkMentaBannerCustomEvent *customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:info localInfo:info];
         customEvent.isC2SBiding = YES;
         customEvent.networkAdvertisingID = slotID;
+        customEvent.UUID = requestUUID;
         
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingRequest alloc] init];
         request.unitGroup = unitGroupModel;
@@ -118,6 +123,7 @@
         request.unitID = slotID;
         request.extraInfo = info;
         request.adType = MentaAdFormatBanner;
+        request.UUID = requestUUID;
         
         MUBannerConfig *config = [[MUBannerConfig alloc] init];
         config.adSize = CGSizeMake(width, height); // adSize 设置多少 最后的banner显示区域就是多少 同时containerView的size 要与adsize保持一致
@@ -129,7 +135,7 @@
         request.customObject = bannerAd;
         [[AnyThinkMentaBiddingManager sharedInstance] startWithRequestItem:request];;
         [bannerAd loadAd];
-        NSLog(@"------> menta start bidding");
+        NSLog(@"------> menta start bidding %@, customevent %@", requestUUID, customEvent);
     }];
 }
 

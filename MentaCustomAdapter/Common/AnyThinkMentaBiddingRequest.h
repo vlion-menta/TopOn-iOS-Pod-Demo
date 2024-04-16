@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, MentaAdFormat) {
 @property (nonatomic, copy) void(^bidCompletion)(ATBidInfo * _Nullable bidInfo, NSError * _Nullable error);
 @property (nonatomic, assign) MentaAdFormat adType;
 @property (nonatomic, strong) NSArray *nativeAds;
+@property (nonatomic, strong) NSString *UUID;
 
 @end
 

@@ -58,8 +58,11 @@
 // 保存相应的竞价request，并向不同广告类型完成绑定
 - (void)startWithRequestItem:(AnyThinkMentaBiddingRequest *)request {
     
-    [self.bidingAdStorageAccessor setObject:request forKey:request.unitID];
-    
+    if (request.UUID) {
+        [self.bidingAdStorageAccessor setObject:request forKey:request.UUID];
+    } else {
+        [self.bidingAdStorageAccessor setObject:request forKey:request.unitID];
+    }
     switch (request.adType) {
         case MentaAdFormatSplash: {
             // 获取代理

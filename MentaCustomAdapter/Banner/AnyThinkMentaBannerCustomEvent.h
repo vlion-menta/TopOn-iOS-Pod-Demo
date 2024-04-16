@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AnyThinkMentaBannerCustomEvent : ATBannerCustomEvent <MentaUnifiedBannerAdDelegate>
 
+@property (nonatomic, strong) NSString *UUID;
+
 @end
 
 NS_ASSUME_NONNULL_END
