@@ -41,7 +41,7 @@
 - (void)menta_splashAd:(MentaUnifiedSplashAd *_Nonnull)splashAd didFailWithError:(NSError * _Nullable)error description:(NSDictionary *_Nonnull)description {
     self.isReady = NO;
     
-    AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.unitID];
+    AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.placementID];
     // 返回获取竞价广告失败
     if (request.bidCompletion) {
         request.bidCompletion(nil, error);
