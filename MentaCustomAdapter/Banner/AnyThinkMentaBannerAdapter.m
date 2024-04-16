@@ -28,7 +28,9 @@
         }
         NSString *appID = serverInfo[appIDKey];
         NSString *appKey = serverInfo[@"appKey"];
-        [AnyThinkMentaBannerAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+        if (![MUAPI isInitialized]) {
+            [AnyThinkMentaBannerAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+        }
     }
     return self;
 }
@@ -44,83 +46,47 @@
     NSString *appID = serverInfo[appIDKey];
     NSString *appKey = serverInfo[@"appKey"];
     NSString *slotID = serverInfo[@"slotID"];
-    BOOL isExpress = [serverInfo[@"isExpressAd"] boolValue];
+    CGFloat width = [NSString stringWithFormat:@"%@", serverInfo[@"width"]].doubleValue;
+    CGFloat height = [NSString stringWithFormat:@"%@", serverInfo[@"height"]].doubleValue;
     NSString *bidId = serverInfo[kATAdapterCustomInfoBuyeruIdKey];
     
     __weak typeof(self) weakSelf = self;
     void(^load)(void) = ^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:slotID];
-        if (request != nil && request.customObject) {
-            strongSelf.customEvent = (AnyThinkMentaBannerCustomEvent *)request.customEvent;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:slotID];
+            if (bidId && request != nil && request.customObject) {
+                strongSelf.customEvent = (AnyThinkMentaBannerCustomEvent *)request.customEvent;
+                strongSelf.customEvent.requestCompletionBlock = completion;
+                strongSelf.bannerAd = (MentaUnifiedBannerAd *)request.customObject;
+                if ([strongSelf.bannerAd fetchBannerView]) {
+                    [strongSelf.customEvent trackBannerAdLoaded:[strongSelf.bannerAd fetchBannerView] adExtra:nil];
+                }
+                [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:slotID];
+                return;
+            }
+            
+            strongSelf.customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
             strongSelf.customEvent.requestCompletionBlock = completion;
-            strongSelf.bannerAd = (MentaUnifiedBannerAd *)request.customObject;
-            [strongSelf.customEvent trackBannerAdLoaded:[UIView new] adExtra:nil];
-        }
+            
+            MUBannerConfig *config = [[MUBannerConfig alloc] init];
+            config.adSize = CGSizeMake(width, height); // adSize 设置多少 最后的banner显示区域就是多少 同时containerView的size 要与adsize保持一致
+            config.slotId = slotID;// 图片
+
+            strongSelf.bannerAd = [[MentaUnifiedBannerAd alloc] initWithConfig:config];
+            strongSelf.bannerAd.delegate = strongSelf.customEvent;
+            [strongSelf.bannerAd loadAd];
+        });
     };
     
-    /*
-     // C2S
-     if (bidId) {
-         if (NSClassFromString(@"AlexGromoreBiddingRequest")) {
-             id<AlexGromoreBiddingRequest_plus> request = [[AlexC2SBiddingParameterManager sharedInstance] getRequestItemWithUnitID:slotIdStr];
-             if (request != nil && request.customObject) {
-                 self->_customEvent = (AlexGromoreBannerCustomEvent*)request.customEvent;
-                 self->_customEvent.requestCompletionBlock = completion;
-                 
-                 self.bannerAd = (BUNativeExpressBannerView *)request.customObject;
-                 [weakSelf.customEvent trackBannerAdLoaded:request.bannerView adExtra:nil];
-             }
- 
-             [[AlexC2SBiddingParameterManager sharedInstance] removeRequestItemWithUnitID:slotIdStr];
-             return;
-         }
-     }
-     
-     dispatch_async(dispatch_get_main_queue(), ^{
-         NSDictionary *slotInfo = [NSJSONSerialization JSONObjectWithData:[serverInfo[@"slot_info"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-         
-         CGSize adSize = CGSizeZero;
-         if ([localInfo[kATAdLoadingExtraBannerAdSizeKey] respondsToSelector:@selector(CGSizeValue)]) {
-             adSize = [localInfo[kATAdLoadingExtraBannerAdSizeKey] CGSizeValue];
-         } else{
-             NSString* sizeStr = slotInfo[@"common"][@"size"];
-             NSArray<NSString*>* comp = [sizeStr componentsSeparatedByString:@"x"];
-             if ([comp count] == 2 && [comp[0] respondsToSelector:@selector(doubleValue)] && [comp[1] respondsToSelector:@selector(doubleValue)]) {
-                 adSize = CGSizeMake([comp[0] doubleValue], [comp[1] doubleValue]);
-             }
-         }
-         
-         self->_customEvent = [[AlexGromoreBannerCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
-         self->_customEvent.requestCompletionBlock = completion;
-         
-         BUAdSlot *slot = [[BUAdSlot alloc] init];
-         slot.ID = slotIdStr;
-         if (localInfo[kATExtraGromoreMutedKey] != nil) {
-             slot.mediation.mutedIfCan = [localInfo[kATExtraGromoreMutedKey] boolValue];
-         }
-         self->_bannerAd = [[BUNativeExpressBannerView alloc] initWithSlot:slot rootViewController:[UIApplication sharedApplication].keyWindow.rootViewController adSize:adSize];
-         self->_bannerAd.delegate = self->_customEvent;
-         [self->_bannerAd loadAdData];
-     });
- };
- 
- [[ATAPI sharedInstance] inspectInitFlagForNetwork:kATNetworkNameMobrain usingBlock:^NSInteger(NSInteger currentValue) {
-     
-     if (currentValue == 2) {
-         load();
-         return currentValue;
-     }
-     [[NSNotificationCenter defaultCenter] removeObserver:self.observer name:kAdGromoreInitiatedKey object:nil];
-     self.observer = nil;
-     self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:kAdGromoreInitiatedKey object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-         load();
-         [[NSNotificationCenter defaultCenter] removeObserver:weakSelf.observer name:kAdGromoreInitiatedKey object:nil];
-         weakSelf.observer = nil;
-     }];
-     return currentValue;
- }];
-     */
+    if ([MUAPI isInitialized]) {
+        load();
+    } else {
+        [AnyThinkMentaBannerAdapter initMentaSDKWith:appID Key:appKey completion:^{
+            load();
+        }];
+    }
 }
 
 #pragma mark - AlexC2SBiddingRequestProtocol
@@ -128,39 +94,57 @@
                       unitGroupModel:(nonnull ATUnitGroupModel *)unitGroupModel
                                 info:(nonnull NSDictionary *)info
                           completion:(nonnull void (^)(ATBidInfo * _Nonnull, NSError * _Nonnull))completion {
-    /*
-     if (NSClassFromString(@"AlexGromoreBiddingRequest")) {
-         [AlexGromoreBaseManager initWithCustomInfo:info localInfo:info];
-         void(^startRequest)(void) = ^{
-             AlexGromoreBannerCustomEvent *customEvent = [[AlexGromoreBannerCustomEvent alloc] initWithInfo:info localInfo:info];
-             customEvent.isC2SBiding = YES;
-             customEvent.networkAdvertisingID = unitGroupModel.content[@"slot_id"];
-             
-             id<AlexGromoreBiddingRequest_plus> request = [NSClassFromString(@"AlexGromoreBiddingRequest") new];
-             request.unitGroup = unitGroupModel;
-             request.placementID = placementModel.placementID;
-             request.customEvent = customEvent;
-             request.bidCompletion = completion;
-             request.unitID = info[@"slot_id"];
-             request.extraInfo = info;
-             request.adType = ATAdFormatBanner;
-             [[NSClassFromString(@"AlexGromoreC2SBiddingRequestManager") sharedInstance] startWithRequestItem:request];
-         };
-         
-         [[ATAPI sharedInstance] inspectInitFlagForNetwork:kATNetworkNameMobrain usingBlock:^NSInteger(NSInteger currentValue) {
-             if (currentValue == 2) {
-                 startRequest();
-                 return currentValue;
-             }
-             [[NSNotificationCenter defaultCenter] addObserverForName:kAdGromoreInitiatedKey object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-                 startRequest();
-             }];
-             return currentValue;
-         }];
-     } else {
-         completion(nil, [NSError errorWithDomain:@"com.alexGromore.C2SBiddingRequest" code:kATBiddingInitiatingFailedCode userInfo:@{NSLocalizedDescriptionKey:@"C2S bidding request has failed", NSLocalizedFailureReasonErrorKey:[NSString stringWithFormat:@"Gromore Adapter not support"]}]);
-     }
-     */
+    
+    NSString *appIDKey = @"appid";
+    if([info.allKeys containsObject:@"appId"]) {
+        appIDKey = @"appId";
+    }
+    NSString *appID = info[appIDKey];
+    NSString *appKey = info[@"appKey"];
+    NSString *slotID = info[@"slotID"];
+    CGFloat width = [NSString stringWithFormat:@"%@", info[@"width"]].doubleValue;
+    CGFloat height = [NSString stringWithFormat:@"%@", info[@"height"]].doubleValue;
+    
+    [AnyThinkMentaBannerAdapter initMentaSDKWith:appID Key:appKey completion:^{
+        AnyThinkMentaBannerCustomEvent *customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:info localInfo:info];
+        customEvent.isC2SBiding = YES;
+        customEvent.networkAdvertisingID = slotID;
+        
+        AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingRequest alloc] init];
+        request.unitGroup = unitGroupModel;
+        request.placementID = placementModel.placementID;
+        request.customEvent = customEvent;
+        request.bidCompletion = completion;
+        request.unitID = slotID;
+        request.extraInfo = info;
+        request.adType = MentaAdFormatBanner;
+        
+        MUBannerConfig *config = [[MUBannerConfig alloc] init];
+        config.adSize = CGSizeMake(width, height); // adSize 设置多少 最后的banner显示区域就是多少 同时containerView的size 要与adsize保持一致
+        config.slotId = slotID;// 图片
+
+        MentaUnifiedBannerAd *bannerAd = [[MentaUnifiedBannerAd alloc] initWithConfig:config];
+        bannerAd.delegate = customEvent;
+        
+        request.customObject = bannerAd;
+        [[AnyThinkMentaBiddingManager sharedInstance] startWithRequestItem:request];;
+        [bannerAd loadAd];
+        NSLog(@"------> menta start bidding");
+    }];
+}
+
+//// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
++ (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
+    NSLog(@"------> menta banner ad win");
+}
+
+//// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
++ (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
+    NSLog(@"------> menta banner ad loss");
+    if ([customObject isKindOfClass:MentaUnifiedBannerAd.class]) {
+        MentaUnifiedBannerAd *ad = (MentaUnifiedBannerAd *)customObject;
+        [ad sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
+    }
 }
 
 #pragma mark - private method

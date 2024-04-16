@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, MentaAdFormat) {
     MentaAdFormatSplash = 0,
     MentaAdFormatNative,
     MentaAdFormatRewardedVideo,
+    MentaAdFormatBanner,
 };
 
 @interface AnyThinkMentaBiddingRequest : NSObject
