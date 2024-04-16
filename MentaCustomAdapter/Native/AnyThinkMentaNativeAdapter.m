@@ -196,10 +196,10 @@
     NSLog(@"------> menta native ad loss");
     if ([customObject isKindOfClass:MentaUnifiedNativeExpressAd.class]) {
         MentaUnifiedNativeExpressAd *nativeExpressAd = (MentaUnifiedNativeExpressAd *)customObject;
-        [nativeExpressAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
+        [nativeExpressAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
     } else {
         MentaUnifiedNativeAd *nativeAd = (MentaUnifiedNativeAd *)customObject;
-        [nativeAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
+        [nativeAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
     }
 }
 

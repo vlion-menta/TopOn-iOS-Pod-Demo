@@ -61,7 +61,6 @@
     NSString *appID = serverInfo[appIDKey];
     NSString *appKey = serverInfo[@"appKey"];
     NSString *slotID = serverInfo[@"slotID"];
-    BOOL isExpress = [serverInfo[@"isExpressAd"] boolValue];
     NSString *bidId = serverInfo[kATAdapterCustomInfoBuyeruIdKey];
     
     __weak __typeof(self)weakSelf = self;
@@ -153,6 +152,20 @@
         [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:^{
             startRequest();
         }];
+    }
+}
+
+//// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
++ (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
+    NSLog(@"------> menta reward video ad win");
+}
+
+//// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
++ (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
+    NSLog(@"------> menta reward video ad loss");
+    if ([customObject isKindOfClass:MentaUnifiedRewardVideoAd.class]) {
+        MentaUnifiedRewardVideoAd *ad = (MentaUnifiedRewardVideoAd *)customObject;
+        [ad sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
     }
 }
 

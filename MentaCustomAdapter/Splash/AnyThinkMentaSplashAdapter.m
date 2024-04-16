@@ -179,7 +179,7 @@
     NSLog(@"------> menta splash ad loss");
     if ([customObject isKindOfClass:MentaUnifiedSplashAd.class]) {
         MentaUnifiedSplashAd *splashAd = (MentaUnifiedSplashAd *)customObject;
-        [splashAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue])}];
+        [splashAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
     }
 }
 
