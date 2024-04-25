@@ -36,7 +36,7 @@
     if (!isExpress) {
         MentaNativeObject *nativeAd = cache.assets[kATAdAssetsCustomObjectKey];
         if (nativeAd.dataObject.isVideo) {
-            return nativeAd.nativeAdView.mediaView;
+            return nativeAd.nativeAdView.mentaMediaView;
         }
     }
     return nil;
