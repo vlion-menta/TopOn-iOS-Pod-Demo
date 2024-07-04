@@ -10,7 +10,7 @@
 #import "ATModelButton.h"
 #import <AnyThinkMediaVideo/ATMediaVideoDelegate.h>
 #import <AnyThinkMediaVideo/ATAdManager+ATMediaVideo.h>
-#import <GoogleInteractiveMediaAds/GoogleInteractiveMediaAds.h>
+//#import <GoogleInteractiveMediaAds/GoogleInteractiveMediaAds.h>
 
 // The content URL to play.
 NSString *const kTestAppContentUrl_MP4 =
@@ -28,8 +28,8 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
 @property (nonatomic, strong) UIView *modelBackView;
 @property(nonatomic, strong) NSString *selectMenuStr;
 
-@property(nonatomic, strong) IMAAVPlayerContentPlayhead *contentPlayhead;
-@property(nonatomic, strong) AVPlayer *contentPlayer;
+//@property(nonatomic, strong) IMAAVPlayerContentPlayhead *contentPlayhead;
+//@property(nonatomic, strong) AVPlayer *contentPlayer;
 @property(nonatomic, strong) UIView *videoView;
 @property (nonatomic, strong) ATMediaVideoOffer *offer;
 @property (nonatomic, assign) BOOL isContentPlayerPlaying;
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
 
 - (void)handleApplicationDidBecomeActiveNotification:(NSNotification*)notification {
     if (self.isContentPlayerPlaying) {
-        [self.contentPlayer play];
+//        [self.contentPlayer play];
     } else {
         [self.offer resume];
     }
@@ -154,29 +154,29 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
 
 - (void)setUpContentPlayer {
   // Load AVPlayer with path to our content.
-  NSURL *contentURL = [NSURL URLWithString:kTestAppContentUrl_MP4];
-  self.contentPlayer = [AVPlayer playerWithURL:contentURL];
-
-  // Create a player layer for the player.
-  AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.contentPlayer];
-
-  // Size, position, and display the AVPlayer.
-  playerLayer.frame = self.videoView.layer.bounds;
-  [self.videoView.layer addSublayer:playerLayer];
-
-  // Set up our content playhead and contentComplete callback.
-  self.contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(contentDidFinishPlaying:)
-                                               name:AVPlayerItemDidPlayToEndTimeNotification
-                                             object:self.contentPlayer.currentItem];
-}
-
-- (void)contentDidFinishPlaying:(NSNotification *)notification {
-  // Make sure we don't call contentComplete as a result of an ad completing.
-  if (notification.object == self.contentPlayer.currentItem) {
-      [self.offer contentComplete];
-  }
+//  NSURL *contentURL = [NSURL URLWithString:kTestAppContentUrl_MP4];
+//  self.contentPlayer = [AVPlayer playerWithURL:contentURL];
+//
+//  // Create a player layer for the player.
+//  AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.contentPlayer];
+//
+//  // Size, position, and display the AVPlayer.
+//  playerLayer.frame = self.videoView.layer.bounds;
+//  [self.videoView.layer addSublayer:playerLayer];
+//
+//  // Set up our content playhead and contentComplete callback.
+//  self.contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
+//  [[NSNotificationCenter defaultCenter] addObserver:self
+//                                           selector:@selector(contentDidFinishPlaying:)
+//                                               name:AVPlayerItemDidPlayToEndTimeNotification
+//                                             object:self.contentPlayer.currentItem];
+//}
+//
+//- (void)contentDidFinishPlaying:(NSNotification *)notification {
+//  // Make sure we don't call contentComplete as a result of an ad completing.
+//  if (notification.object == self.contentPlayer.currentItem) {
+//      [self.offer contentComplete];
+//  }
 }
 
 #pragma mark - Ad Action
@@ -207,8 +207,8 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
     extra[kATAdMediaVideoExtraKeyAutoPlayAdBreaks] = @NO;
     //关闭当前播放信息
     extra[kATAdMediaVideoExtraKeyDisableNowPlayingInfo] = @YES;
-    
-    [[ATAdManager sharedManager] loadADWithPlacementID:self.placementID extra:extra controlDataParam:@{@"description_url":@"description_url"} playhead:self.contentPlayhead delegate:self mediaVideoContainerView:self.videoView viewController:self];
+//    
+//    [[ATAdManager sharedManager] loadADWithPlacementID:self.placementID extra:extra controlDataParam:@{@"description_url":@"description_url"} playhead:self.contentPlayhead delegate:self mediaVideoContainerView:self.videoView viewController:self];
 }
 
 
@@ -392,13 +392,13 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
 /// IMA callback
 - (void)mediaVideoAdForPlacementID:(NSString *)placementID
                              extra:(NSDictionary *)extra event:(id)event {
-    IMAAdEventType type = kIMAAdEvent_AD_BREAK_READY;
-    IMAAdEvent *adEvent = event;
-    if([adEvent isKindOfClass:[IMAAdEvent class]]) {
-        type = adEvent.type;
-    }
-    NSLog(@"ATMediaVideoMainViewController::mediaVideoAdForPlacementID:%@ event:%ld extra:%@", placementID, type, extra);
-    [self showLog:[NSString stringWithFormat:@"mediaVideoAdForPlacementID:%@ event:%ld", placementID, type]];
+//    IMAAdEventType type = kIMAAdEvent_AD_BREAK_READY;
+//    IMAAdEvent *adEvent = event;
+//    if([adEvent isKindOfClass:[IMAAdEvent class]]) {
+//        type = adEvent.type;
+//    }
+//    NSLog(@"ATMediaVideoMainViewController::mediaVideoAdForPlacementID:%@ event:%ld extra:%@", placementID, type, extra);
+//    [self showLog:[NSString stringWithFormat:@"mediaVideoAdForPlacementID:%@ event:%ld", placementID, type]];
 }
 
 /// video area tap
@@ -445,7 +445,7 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
         return;
     }
     
-    [self.contentPlayer pause];
+//    [self.contentPlayer pause];
     self.isContentPlayerPlaying = NO;
 }
 
@@ -458,7 +458,7 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
         return;
     }
     
-    [self.contentPlayer play];
+//    [self.contentPlayer play];
     self.isContentPlayerPlaying = YES;
 }
 
