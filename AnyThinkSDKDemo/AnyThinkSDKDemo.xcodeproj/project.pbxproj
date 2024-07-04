@@ -20,12 +20,14 @@
 		04CF323428000EDC0083B5AA /* ATNativeMessageStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF323028000EDB0083B5AA /* ATNativeMessageStreamViewController.m */; };
 		04CF323A28000F6D0083B5AA /* ATAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF323928000F6D0083B5AA /* ATAutoLayout.m */; };
 		04CF323F28000FB70083B5AA /* ATNativeRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF323B28000FB70083B5AA /* ATNativeRenderView.m */; };
+		097DE5EF2BF5ADF9000A3650 /* ATTMBiddingDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 097DE5E52BF5ADF9000A3650 /* ATTMBiddingDelegate.m */; };
+		097DE5F02BF5ADF9000A3650 /* ATTMBiddingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 097DE5E72BF5ADF9000A3650 /* ATTMBiddingManager.m */; };
+		097DE5F12BF5ADF9000A3650 /* ATTMBiddingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 097DE5E92BF5ADF9000A3650 /* ATTMBiddingRequest.m */; };
+		097DE5F22BF5ADF9000A3650 /* MentaATSplashCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 097DE5EB2BF5ADF9000A3650 /* MentaATSplashCustomEvent.m */; };
+		097DE5F32BF5ADF9000A3650 /* MentaSplashAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 097DE5ED2BF5ADF9000A3650 /* MentaSplashAdapter.m */; };
 		4B8C3E162BBADE1500D290AB /* ATMediaVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8C3E142BBADE1500D290AB /* ATMediaVideoViewController.m */; };
-		5B4FA6AF2BC795E400F42E79 /* ATTMBiddingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FA6A32BC795E400F42E79 /* ATTMBiddingRequest.m */; };
 		5B4FA6B02BC795E400F42E79 /* ATTMSplashCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FA6A42BC795E400F42E79 /* ATTMSplashCustomEvent.m */; };
-		5B4FA6B12BC795E400F42E79 /* ATTMBiddingDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FA6A82BC795E400F42E79 /* ATTMBiddingDelegate.m */; };
 		5B4FA6B22BC795E400F42E79 /* ATTMSplashAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FA6AB2BC795E400F42E79 /* ATTMSplashAdapter.m */; };
-		5B4FA6B32BC795E400F42E79 /* ATTMBiddingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FA6AC2BC795E400F42E79 /* ATTMBiddingManager.m */; };
 		5B4FA6B42BC795E400F42E79 /* ATTMCustomSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FA6AD2BC795E400F42E79 /* ATTMCustomSplashViewController.m */; };
 		9B1A9D6C288E82C800CC16FA /* ATNativeMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A9D6A288E82C800CC16FA /* ATNativeMainViewController.m */; };
 		9B1A9F5E288F882800CC16FA /* ATPasterVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A9F5D288F882800CC16FA /* ATPasterVideoViewController.m */; };
@@ -103,19 +105,23 @@
 		04CF323928000F6D0083B5AA /* ATAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATAutoLayout.m; sourceTree = "<group>"; };
 		04CF323B28000FB70083B5AA /* ATNativeRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATNativeRenderView.m; sourceTree = "<group>"; };
 		04CF323C28000FB70083B5AA /* ATNativeRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATNativeRenderView.h; sourceTree = "<group>"; };
+		097DE5E42BF5ADF9000A3650 /* ATTMBiddingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMBiddingDelegate.h; sourceTree = "<group>"; };
+		097DE5E52BF5ADF9000A3650 /* ATTMBiddingDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMBiddingDelegate.m; sourceTree = "<group>"; };
+		097DE5E62BF5ADF9000A3650 /* ATTMBiddingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMBiddingManager.h; sourceTree = "<group>"; };
+		097DE5E72BF5ADF9000A3650 /* ATTMBiddingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMBiddingManager.m; sourceTree = "<group>"; };
+		097DE5E82BF5ADF9000A3650 /* ATTMBiddingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMBiddingRequest.h; sourceTree = "<group>"; };
+		097DE5E92BF5ADF9000A3650 /* ATTMBiddingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMBiddingRequest.m; sourceTree = "<group>"; };
+		097DE5EA2BF5ADF9000A3650 /* MentaATSplashCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentaATSplashCustomEvent.h; sourceTree = "<group>"; };
+		097DE5EB2BF5ADF9000A3650 /* MentaATSplashCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentaATSplashCustomEvent.m; sourceTree = "<group>"; };
+		097DE5EC2BF5ADF9000A3650 /* MentaSplashAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentaSplashAdapter.h; sourceTree = "<group>"; };
+		097DE5ED2BF5ADF9000A3650 /* MentaSplashAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentaSplashAdapter.m; sourceTree = "<group>"; };
 		44D83BDBBF3D3D426850A3E1 /* Pods-AnyThinkSDKDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnyThinkSDKDemo.release.xcconfig"; path = "Target Support Files/Pods-AnyThinkSDKDemo/Pods-AnyThinkSDKDemo.release.xcconfig"; sourceTree = "<group>"; };
 		4B8C3E142BBADE1500D290AB /* ATMediaVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMediaVideoViewController.m; sourceTree = "<group>"; };
 		4B8C3E152BBADE1500D290AB /* ATMediaVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMediaVideoViewController.h; sourceTree = "<group>"; };
-		5B4FA6A32BC795E400F42E79 /* ATTMBiddingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMBiddingRequest.m; sourceTree = "<group>"; };
 		5B4FA6A42BC795E400F42E79 /* ATTMSplashCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMSplashCustomEvent.m; sourceTree = "<group>"; };
-		5B4FA6A52BC795E400F42E79 /* ATTMBiddingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMBiddingDelegate.h; sourceTree = "<group>"; };
-		5B4FA6A62BC795E400F42E79 /* ATTMBiddingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMBiddingManager.h; sourceTree = "<group>"; };
 		5B4FA6A72BC795E400F42E79 /* ATTMSplashAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMSplashAdapter.h; sourceTree = "<group>"; };
-		5B4FA6A82BC795E400F42E79 /* ATTMBiddingDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMBiddingDelegate.m; sourceTree = "<group>"; };
 		5B4FA6A92BC795E400F42E79 /* ATTMSplashCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMSplashCustomEvent.h; sourceTree = "<group>"; };
-		5B4FA6AA2BC795E400F42E79 /* ATTMBiddingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMBiddingRequest.h; sourceTree = "<group>"; };
 		5B4FA6AB2BC795E400F42E79 /* ATTMSplashAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMSplashAdapter.m; sourceTree = "<group>"; };
-		5B4FA6AC2BC795E400F42E79 /* ATTMBiddingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMBiddingManager.m; sourceTree = "<group>"; };
 		5B4FA6AD2BC795E400F42E79 /* ATTMCustomSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATTMCustomSplashViewController.m; sourceTree = "<group>"; };
 		5B4FA6AE2BC795E400F42E79 /* ATTMCustomSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTMCustomSplashViewController.h; sourceTree = "<group>"; };
 		85EEA80B39960C835625EC2F /* Pods-AnyThinkSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnyThinkSDKDemo.debug.xcconfig"; path = "Target Support Files/Pods-AnyThinkSDKDemo/Pods-AnyThinkSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -255,6 +261,23 @@
 			path = Automation;
 			sourceTree = "<group>";
 		};
+		097DE5EE2BF5ADF9000A3650 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				097DE5E42BF5ADF9000A3650 /* ATTMBiddingDelegate.h */,
+				097DE5E52BF5ADF9000A3650 /* ATTMBiddingDelegate.m */,
+				097DE5E62BF5ADF9000A3650 /* ATTMBiddingManager.h */,
+				097DE5E72BF5ADF9000A3650 /* ATTMBiddingManager.m */,
+				097DE5E82BF5ADF9000A3650 /* ATTMBiddingRequest.h */,
+				097DE5E92BF5ADF9000A3650 /* ATTMBiddingRequest.m */,
+				097DE5EA2BF5ADF9000A3650 /* MentaATSplashCustomEvent.h */,
+				097DE5EB2BF5ADF9000A3650 /* MentaATSplashCustomEvent.m */,
+				097DE5EC2BF5ADF9000A3650 /* MentaSplashAdapter.h */,
+				097DE5ED2BF5ADF9000A3650 /* MentaSplashAdapter.m */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
 		1BE5C78DE8928691D97412C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +319,7 @@
 		5B4FA6A12BC795E400F42E79 /* CustomAdapter */ = {
 			isa = PBXGroup;
 			children = (
+				097DE5EE2BF5ADF9000A3650 /* Adapter */,
 				5B4FA6A22BC795E400F42E79 /* CustomSplash */,
 				5B4FA6AE2BC795E400F42E79 /* ATTMCustomSplashViewController.h */,
 				5B4FA6AD2BC795E400F42E79 /* ATTMCustomSplashViewController.m */,
@@ -306,14 +330,8 @@
 		5B4FA6A22BC795E400F42E79 /* CustomSplash */ = {
 			isa = PBXGroup;
 			children = (
-				5B4FA6AA2BC795E400F42E79 /* ATTMBiddingRequest.h */,
-				5B4FA6A32BC795E400F42E79 /* ATTMBiddingRequest.m */,
 				5B4FA6A92BC795E400F42E79 /* ATTMSplashCustomEvent.h */,
 				5B4FA6A42BC795E400F42E79 /* ATTMSplashCustomEvent.m */,
-				5B4FA6A52BC795E400F42E79 /* ATTMBiddingDelegate.h */,
-				5B4FA6A82BC795E400F42E79 /* ATTMBiddingDelegate.m */,
-				5B4FA6A62BC795E400F42E79 /* ATTMBiddingManager.h */,
-				5B4FA6AC2BC795E400F42E79 /* ATTMBiddingManager.m */,
 				5B4FA6A72BC795E400F42E79 /* ATTMSplashAdapter.h */,
 				5B4FA6AB2BC795E400F42E79 /* ATTMSplashAdapter.m */,
 			);
@@ -679,9 +697,9 @@
 				9BBD00C3248630C8009EAD66 /* ATDrawViewController.m in Sources */,
 				04CF3226280007900083B5AA /* ATAutomationTableViewCell.m in Sources */,
 				9B1A9D6C288E82C800CC16FA /* ATNativeMainViewController.m in Sources */,
-				5B4FA6B12BC795E400F42E79 /* ATTMBiddingDelegate.m in Sources */,
 				04CF3222280007900083B5AA /* ATADFootView.m in Sources */,
 				04CF3225280007900083B5AA /* ATAutomationTestViewController.m in Sources */,
+				097DE5F12BF5ADF9000A3650 /* ATTMBiddingRequest.m in Sources */,
 				9BBD00AA2486304C009EAD66 /* main.m in Sources */,
 				E0F3B8A7286D75B7007CF5AB /* ATNativeListOtherCell.m in Sources */,
 				9BC80A44289D0F930074D1E6 /* ATUtilitiesTool.m in Sources */,
@@ -692,15 +710,15 @@
 				5B4FA6B22BC795E400F42E79 /* ATTMSplashAdapter.m in Sources */,
 				9B9FEC1B2890199200B905ED /* ATPasterSelfRenderView.m in Sources */,
 				9B1A9F6A288FCA4300CC16FA /* ATDrawListAdCell.m in Sources */,
-				5B4FA6AF2BC795E400F42E79 /* ATTMBiddingRequest.m in Sources */,
 				E0F3B8AB286D973F007CF5AB /* ATDemoOfferAdMode.m in Sources */,
 				04CF3220280007900083B5AA /* ATHomeFootView.m in Sources */,
 				9BBD009C24863048009EAD66 /* SceneDelegate.m in Sources */,
-				5B4FA6B32BC795E400F42E79 /* ATTMBiddingManager.m in Sources */,
 				5B4FA6B02BC795E400F42E79 /* ATTMSplashCustomEvent.m in Sources */,
+				097DE5F02BF5ADF9000A3650 /* ATTMBiddingManager.m in Sources */,
 				9BBD00BE248630C8009EAD66 /* ATBannerViewController.m in Sources */,
 				9B9FEC2128925F3200B905ED /* ATNativeExpressViewController.m in Sources */,
 				04CF323F28000FB70083B5AA /* ATNativeRenderView.m in Sources */,
+				097DE5EF2BF5ADF9000A3650 /* ATTMBiddingDelegate.m in Sources */,
 				04CF3223280007900083B5AA /* ATSelectViewController.m in Sources */,
 				9B9FEC11288FE91A00B905ED /* ATDrawListOtherCell.m in Sources */,
 				9B1A9F5E288F882800CC16FA /* ATPasterVideoViewController.m in Sources */,
@@ -708,7 +726,9 @@
 				9BBD00C1248630C8009EAD66 /* ATNativeSelfRenderViewController.m in Sources */,
 				9BBD00BF248630C8009EAD66 /* ATInterstitialViewController.m in Sources */,
 				5B4FA6B42BC795E400F42E79 /* ATTMCustomSplashViewController.m in Sources */,
+				097DE5F32BF5ADF9000A3650 /* MentaSplashAdapter.m in Sources */,
 				04CF322B280008520083B5AA /* ATRewardVideoViewController.m in Sources */,
+				097DE5F22BF5ADF9000A3650 /* MentaATSplashCustomEvent.m in Sources */,
 				04CF3227280007900083B5AA /* ATMenuView.m in Sources */,
 				9B6DF73D259436DD004E9FDB /* ATSplashViewController.m in Sources */,
 				E0F3B89E286D73E7007CF5AB /* ATNativeListViewController.m in Sources */,
@@ -857,7 +877,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8XJQRXQM72;
+				DEVELOPMENT_TEAM = 3RTK89G5W5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -900,7 +920,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8XJQRXQM72;
+				DEVELOPMENT_TEAM = 3RTK89G5W5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

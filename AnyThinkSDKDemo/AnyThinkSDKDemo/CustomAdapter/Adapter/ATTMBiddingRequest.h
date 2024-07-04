@@ -6,14 +6,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <AnyThinkSDK/AnyThinkSDK.h>
+#import "MentaATSplashCustomEvent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, ESCAdFormat) {
-    ESCAdFormatSplash = 0,
+    MSAdFormatSplash ,
+    OCTAdFormatSplash,
     MentaAdFormatSplash,
+    WangMaiAdFormatSplash,
+    AdscopeAdFormatSplash
 };
 
 
@@ -23,7 +26,8 @@ typedef NS_ENUM(NSInteger, ESCAdFormat) {
 @property(nonatomic, strong) id customObject;
 
 @property(nonatomic, strong) ATUnitGroupModel *unitGroup;
-
+//
+@property(nonatomic, strong) MentaATSplashCustomEvent * mentaCustomEvent;
 @property(nonatomic, strong) ATAdCustomEvent *customEvent;
 
 @property(nonatomic, copy) NSString *unitID;
