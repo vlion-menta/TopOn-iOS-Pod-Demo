@@ -41,6 +41,10 @@ target 'AnyThinkSDKDemo' do
   
   #海外
    pod 'TPNMentaCustomAdapter', :path => '../TPNMentaCustomAdapter.podspec'
+   pod 'MentaVlionGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaVlionGlobal.podspec'
+   pod 'MentaVlionGlobalAdapter', :path => '/Users/jdy/Desktop/Menta-Global/MentaVlionGlobalAdapter.podspec'
+   pod 'MentaMediationGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaMediationGlobal.podspec'
+   pod 'MentaBaseGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaBaseGlobal.podspec'
   
 #  pod 'AnyThinkiOS','6.3.54'
   pod 'TianmuSDK'
