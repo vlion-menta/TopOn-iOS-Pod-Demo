@@ -6,6 +6,7 @@
 //
 
 #import "AnyThinkMentaBiddingManager.h"
+#import "AnyThinkMentaSplashBiddingDelegate.h"
 
 @interface AnyThinkMentaBiddingManager ()
 
@@ -40,11 +41,11 @@
     }
 }
 
-//- (void)savaBiddingDelegate:(AnyThinkMentaSplashBiddingDelegate *)delegate withUnitID:(NSString *)unitID {
-//    @synchronized (self) {
-//        [self.bidingAdDelegate setObject:delegate forKey:unitID];
-//    }
-//}
+- (void)savaBiddingDelegate:(AnyThinkMentaSplashBiddingDelegate *)delegate withUnitID:(NSString *)unitID {
+    @synchronized (self) {
+        [self.bidingAdDelegate setObject:delegate forKey:unitID];
+    }
+}
 
 - (void)removeBiddingDelegateWithUnitID:(NSString *)unitID {
     @synchronized (self) {
@@ -65,10 +66,10 @@
     switch (request.adType) {
         case MentaAdFormatSplash: {
             // 获取代理
-//            AnyThinkMentaSplashBiddingDelegate *delegate = [[AnyThinkMentaSplashBiddingDelegate alloc] initWithInfo:request.extraInfo localInfo:request.extraInfo];
-//            delegate.placementID = request.unitID;
-//            [request.customObject setValue:delegate forKey:@"delegate"];
-//            [self savaBiddingDelegate:delegate withUnitID:request.unitID];
+            AnyThinkMentaSplashBiddingDelegate *delegate = [[AnyThinkMentaSplashBiddingDelegate alloc] initWithInfo:request.extraInfo localInfo:request.extraInfo];
+            delegate.placementID = request.unitID;
+            [request.customObject setValue:delegate forKey:@"delegate"];
+            [self savaBiddingDelegate:delegate withUnitID:request.unitID];
             break;
         }
         case MentaAdFormatNative: {
