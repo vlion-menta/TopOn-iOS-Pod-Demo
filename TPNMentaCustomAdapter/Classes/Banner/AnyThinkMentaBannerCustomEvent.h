@@ -6,11 +6,11 @@
 //
 
 #import <AnyThinkBanner/AnyThinkBanner.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaBannerCustomEvent : ATBannerCustomEvent <MentaUnifiedBannerAdDelegate>
+@interface AnyThinkMentaBannerCustomEvent : ATBannerCustomEvent <MentaMediationBannerDelegate>
 
 @property (nonatomic, strong) NSString *UUID;
 
