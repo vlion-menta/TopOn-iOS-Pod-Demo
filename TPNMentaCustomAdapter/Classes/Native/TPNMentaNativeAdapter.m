@@ -5,8 +5,8 @@
 //  Created by jdy on 2024/7/4.
 //
 
-#import "TPNMentaNativeExpressAdapter.h"
+#import "TPNMentaNativeAdapter.h"
 
-@implementation TPNMentaNativeExpressAdapter
+@implementation TPNMentaNativeAdapter
 
 @end

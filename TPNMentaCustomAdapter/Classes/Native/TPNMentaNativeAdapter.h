@@ -1,5 +1,5 @@
 //
-//  TPNMentaNativeSelfRenderAdapter.h
+//  TPNMentaNativeExpressAdapter.h
 //  TPNMentaCustomAdapter
 //
 //  Created by jdy on 2024/7/4.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPNMentaNativeSelfRenderAdapter : NSObject
+@interface TPNMentaNativeAdapter : NSObject
 
 @end
 
