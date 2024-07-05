@@ -6,21 +6,21 @@
 //
 
 #import "AnyThinkMentaRewardedVideoAdapter.h"
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
 #import "AnyThinkMentaRewardedVideoCustomEvent.h"
 #import "AnyThinkMentaBiddingManager.h"
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 @interface AnyThinkMentaRewardedVideoAdapter ()
 
 @property (nonatomic, strong) AnyThinkMentaRewardedVideoCustomEvent *customEvent;
-@property (nonatomic, strong) MentaUnifiedRewardVideoAd *rewardedVideo;
+@property (nonatomic, strong) MentaMediationRewardVideo *rewardedVideo;
 
 @end
 
 @implementation AnyThinkMentaRewardedVideoAdapter
 
 + (BOOL)adReadyWithCustomObject:(id)customObject info:(NSDictionary*)info {
-    MentaUnifiedRewardVideoAd *rewardedVideo = (MentaUnifiedRewardVideoAd *)customObject;
+    MentaMediationRewardVideo *rewardedVideo = (MentaMediationRewardVideo *)customObject;
     if ([rewardedVideo.delegate isKindOfClass:AnyThinkMentaRewardedVideoCustomEvent.class]) {
         AnyThinkMentaRewardedVideoCustomEvent *event = (AnyThinkMentaRewardedVideoCustomEvent *)rewardedVideo.delegate;
         return event.isReady;
@@ -32,12 +32,13 @@
 + (void)showRewardedVideo:(ATRewardedVideo*)rewardedVideo 
          inViewController:(UIViewController*)viewController
                  delegate:(id<ATRewardedVideoDelegate>)delegate {
-    [((MentaUnifiedRewardVideoAd *)rewardedVideo.customObject) showAdFromRootViewController:viewController];
+    [((MentaMediationRewardVideo *)rewardedVideo.customObject) showAdFromRootViewController:viewController];
 }
 
 - (instancetype)initWithNetworkCustomInfo:(NSDictionary*)serverInfo localInfo:(NSDictionary*)localInfo {
     self = [super init];
     if (self != nil) {
+        [[MentaAdSDK shared] setLogLevel:kMentaLogLevelDebug];
         NSString *appIDKey = @"appid";
         if([serverInfo.allKeys containsObject:@"appId"]) {
             appIDKey = @"appId";
@@ -45,7 +46,7 @@
         NSString *appID = serverInfo[appIDKey];
         NSString *appKey = serverInfo[@"appKey"];
         
-        if (![MUAPI isInitialized]) {
+        if (![[MentaAdSDK shared] isInitialized]) {
             [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:nil];
         }
     }
@@ -87,11 +88,7 @@
                 strongSelf.customEvent.requestCompletionBlock = completion;
                 strongSelf.customEvent.customEventMetaDataDidLoadedBlock = strongSelf.metaDataDidLoadedBlock;
                 
-                MURewardVideoConfig *config = [[MURewardVideoConfig alloc] init];
-                config.adSize = UIScreen.mainScreen.bounds.size;
-                config.slotId = slotID;
-                config.videoGravity = MentaRewardVideoAdViewGravity_ResizeAspect;
-                strongSelf.rewardedVideo = [[MentaUnifiedRewardVideoAd alloc] initWithConfig:config];
+                strongSelf.rewardedVideo = [[MentaMediationRewardVideo alloc] initWithPlacementID:slotID];
                 strongSelf.rewardedVideo.delegate = strongSelf.customEvent;
                 
                 [strongSelf.rewardedVideo loadAd];
@@ -99,7 +96,7 @@
         });
     };
     
-    if ([MUAPI isInitialized]) {
+    if ([[MentaAdSDK shared] isInitialized]) {
         load();
     } else {
         [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:^{
@@ -136,11 +133,7 @@
         request.extraInfo = info;
         request.adType = MentaAdFormatRewardedVideo;
         
-        MURewardVideoConfig *config = [[MURewardVideoConfig alloc] init];
-        config.adSize = UIScreen.mainScreen.bounds.size;
-        config.slotId = slotID;
-        config.videoGravity = MentaRewardVideoAdViewGravity_ResizeAspect;
-        MentaUnifiedRewardVideoAd *rewardVideoAd = [[MentaUnifiedRewardVideoAd alloc] initWithConfig:config];
+        MentaMediationRewardVideo *rewardVideoAd = [[MentaMediationRewardVideo alloc] initWithPlacementID:slotID];
         rewardVideoAd.delegate = customEvent;
         
         request.customObject = rewardVideoAd;
@@ -148,7 +141,7 @@
         
         [rewardVideoAd loadAd];
     };
-    if ([MUAPI isInitialized]) {
+    if ([[MentaAdSDK shared] isInitialized]) {
         startRequest();
     } else {
         [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:^{
@@ -160,14 +153,19 @@
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
     NSLog(@"------> menta reward video ad win");
+    if ([customObject isKindOfClass:MentaMediationRewardVideo.class]) {
+        MentaMediationRewardVideo *ad = (MentaMediationRewardVideo *)customObject;
+        [ad sendWinnerNotification];
+    }
 }
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
     NSLog(@"------> menta reward video ad loss");
-    if ([customObject isKindOfClass:MentaUnifiedRewardVideoAd.class]) {
-        MentaUnifiedRewardVideoAd *ad = (MentaUnifiedRewardVideoAd *)customObject;
-        [ad sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
+    if ([customObject isKindOfClass:MentaMediationRewardVideo.class]) {
+        MentaMediationRewardVideo *ad = (MentaMediationRewardVideo *)customObject;
+        double ecpm = price.doubleValue *100;
+        [ad sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
     }
 }
 
@@ -177,22 +175,11 @@
                      Key:(NSString *)appKey
               completion:(void (^)(void))completion {
     NSLog(@"------> start init menta sdk");
-    [MUAPI startWithAppID:appID
-                   appKey:appKey
-              finishBlock:^(BOOL success, NSError * _Nullable error) {
+    [[MentaAdSDK shared] startWithAppID:appID appKey:appKey finishBlock:^(BOOL success, NSError * _Nullable error) {
         if (success && completion != nil) {
             completion();
         }
     }];
-}
-
-+ (MentaUnifiedRewardVideoAd *)initRewardedAdWith:(NSString *)slotID {
-    MURewardVideoConfig *config = [[MURewardVideoConfig alloc] init];
-    config.adSize = UIScreen.mainScreen.bounds.size;
-    config.slotId = slotID;
-    config.videoGravity = MentaRewardVideoAdViewGravity_ResizeAspect;
-    
-    return [[MentaUnifiedRewardVideoAd alloc] initWithConfig:config];
 }
 
 - (void)dealloc

@@ -6,11 +6,11 @@
 //
 
 #import <AnyThinkRewardedVideo/AnyThinkRewardedVideo.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaRewardedVideoCustomEvent : ATRewardedVideoCustomEvent <MentaUnifiedRewardVideoDelegate>
+@interface AnyThinkMentaRewardedVideoCustomEvent : ATRewardedVideoCustomEvent <MentaMediationRewardVideoDelegate>
 
 @property (nonatomic, assign, readonly) BOOL isReady;
 
