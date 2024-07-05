@@ -7,11 +7,11 @@
 //
 
 #import <AnyThinkSplash/AnyThinkSplash.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaSplashCustomEvent : ATSplashCustomEvent <MentaUnifiedSplashAdDelegate>
+@interface AnyThinkMentaSplashCustomEvent : ATSplashCustomEvent <MentaMediationSplashDelegate>
 
 @property (nonatomic, assign, readonly) BOOL isReady;
 
