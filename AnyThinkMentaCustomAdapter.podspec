@@ -15,6 +15,10 @@ Pod::Spec.new do |s|
     s.static_framework = true
   
     s.source_files = 'MentaCustomAdapter/**/*'
+
+    s.dependency 'MentaVlionBaseSDK', '~> 5.20.25'
+    s.dependency 'MentaUnifiedSDK',   '~> 5.20.25'
+    s.dependency 'MentaVlionSDK',     '~> 5.20.25'
     s.dependency 'MentaVlionAdapter', '~> 5.20.25'
     s.dependency 'AnyThinkiOS', '~> 6.3.54'
   
