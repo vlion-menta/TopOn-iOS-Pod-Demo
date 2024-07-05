@@ -30,13 +30,17 @@ target 'AnyThinkSDKDemo' do
   share_pods
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
-  pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
+  
+  # 国内
+#  pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
   
   # pod 'MentaUnifiedSDK',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaUnifiedSDK.podspec'
   # pod 'MentaVlionBaseSDK', :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionBaseSDK.podspec'
   # pod 'MentaVlionSDK',     :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionSDK.podspec'
   # pod 'MentaVlionAdapter', :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionAdapter.podspec'
+  
+  #海外
+  pod 'TPNMentaCustomAdapter', :path => '../TPNMentaCustomAdapter.podspec'
   
 #  pod 'AnyThinkiOS','6.3.54'
   pod 'TianmuSDK'
