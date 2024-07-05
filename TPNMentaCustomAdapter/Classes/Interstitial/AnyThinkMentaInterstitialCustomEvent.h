@@ -6,11 +6,11 @@
 //
 
 #import <AnyThinkInterstitial/AnyThinkInterstitial.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaInterstitialCustomEvent : ATInterstitialCustomEvent <MentaUnifiedInterstitialAdDelegate>
+@interface AnyThinkMentaInterstitialCustomEvent : ATInterstitialCustomEvent <MentaMediationInterstitialDelegate>
 
 @property (nonatomic, assign, readonly) BOOL isReady;
 
