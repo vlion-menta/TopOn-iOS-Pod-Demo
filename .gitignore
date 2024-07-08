@@ -4,5 +4,8 @@ AnyThinkSDKDemo/Pods
 AnyThinkSDKDemo/AnyThinkSDKDemo.xcworkspace
 AnyThinkSDKDemo/SDK
 JoyPacSDKDemo
+Build
+fastlane/report.xml
+fastlane/README.md
 
 AnyThinkSDKDemo.xcodeproj
