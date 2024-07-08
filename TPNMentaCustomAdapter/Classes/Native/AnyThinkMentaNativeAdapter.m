@@ -10,13 +10,13 @@
 #import "AnyThinkMentaNativeRender.h"
 #import "AnyThinkMentaBiddingManager.h"
 #import "AnyThinkMentaBiddingRequest.h"
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 @interface AnyThinkMentaNativeAdapter ()
 
 @property (nonatomic, strong) AnyThinkMentaNativeCustomEvent *customEvent;
-@property (nonatomic, strong) MentaUnifiedNativeExpressAd *nativeExpressAd;
-@property (nonatomic, strong) MentaUnifiedNativeAd *nativeAd;
+@property (nonatomic, strong) MentaMediationNativeExpress *nativeExpressAd;
+@property (nonatomic, strong) MentaMediationNativeSelfRender *nativeAd;
 
 @end
 
@@ -37,7 +37,7 @@
         NSString *appID = serverInfo[appIDKey];
         NSString *appKey = serverInfo[@"appKey"];
         
-        if (![MUAPI isInitialized]) {
+        if (![[MentaAdSDK shared] isInitialized]) {
             [AnyThinkMentaNativeAdapter initMentaSDKWith:appID Key:appKey completion:nil];
         }
     }
@@ -68,39 +68,33 @@
                     strongSelf.customEvent = (AnyThinkMentaNativeCustomEvent *)request.customEvent;
                     strongSelf.customEvent.requestCompletionBlock = completion;
                     if (isExpress) {
-                        strongSelf.nativeExpressAd = (MentaUnifiedNativeExpressAd *)request.customObject;
-                        [strongSelf.customEvent nativeExpressAdLoadedWith:strongSelf.nativeExpressAd nativeExpressAdObj:request.nativeAds.firstObject];
+                        strongSelf.nativeExpressAd = (MentaMediationNativeExpress *)request.customObject;
+                        [strongSelf.customEvent nativeExpressAdLoadedWith:strongSelf.nativeExpressAd nativeExpressAdView:request.nativeAds.firstObject];
                     } else {
                         // 自渲染
-                        strongSelf.nativeAd = (MentaUnifiedNativeAd *)request.customObject;
-                        [strongSelf.customEvent nativeAdLoadedWith:strongSelf.nativeAd nativeAdObj:request.nativeAds.firstObject];
+                        strongSelf.nativeAd = (MentaMediationNativeSelfRender *)request.customObject;
+                        [strongSelf.customEvent nativeSelfRenderAdLoadedWith:strongSelf.nativeAd nativeSelfRenderAdModel:request.nativeAds.firstObject];
                     }
                     [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:slotID];
                     return;
                 }
             } else {
                 strongSelf.customEvent = [[AnyThinkMentaNativeCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
+                strongSelf.customEvent.networkAdvertisingID = slotID;
                 strongSelf.customEvent.requestCompletionBlock = completion;
                 if (isExpress) {
                     CGSize adSize = CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) - 20.0, 300.0f);
                     if ([serverInfo[kATExtraInfoNativeAdSizeKey] respondsToSelector:@selector(CGSizeValue)]) {
                         adSize = [serverInfo[kATExtraInfoNativeAdSizeKey] CGSizeValue];
                     }
-                    MUNativeExpressConfig *config = [[MUNativeExpressConfig alloc] init];
-                    config.adSize = adSize;
-                    config.slotId = slotID;
-                    config.materialFillMode = MentaNativeExpressAdMaterialFillMode_ScaleAspectFill;
 
-                    strongSelf.nativeExpressAd = [[MentaUnifiedNativeExpressAd alloc] initWithConfig:config];
+                    strongSelf.nativeExpressAd = [[MentaMediationNativeExpress alloc] initWithPlacementID:slotID];
                     strongSelf.nativeExpressAd.delegate = strongSelf.customEvent;
                     
                     [strongSelf.nativeExpressAd loadAd];
                 } else {
                     // 自渲染
-                    MUNativeConfig *config = [[MUNativeConfig alloc] init];
-                    config.slotId = slotID;
-                    
-                    strongSelf.nativeAd = [[MentaUnifiedNativeAd alloc] initWithConfig:config];
+                    strongSelf.nativeAd = [[MentaMediationNativeSelfRender alloc] initWithPlacementID:slotID];
                     strongSelf.nativeAd.delegate = strongSelf.customEvent;
                     
                     [strongSelf.nativeAd loadAd];
@@ -109,7 +103,7 @@
         });
     };
     
-    if ([MUAPI isInitialized]) {
+    if ([[MentaAdSDK shared] isInitialized]) {
         load();
     } else {
         [AnyThinkMentaNativeAdapter initMentaSDKWith:appID Key:appKey completion:^{
@@ -162,22 +156,15 @@
             if ([info[kATExtraInfoNativeAdSizeKey] respondsToSelector:@selector(CGSizeValue)]) {
                 adSize = [info[kATExtraInfoNativeAdSizeKey] CGSizeValue];
             }
-            MUNativeExpressConfig *config = [[MUNativeExpressConfig alloc] init];
-            config.adSize = adSize;
-            config.slotId = slotID;
-            config.materialFillMode = MentaNativeExpressAdMaterialFillMode_ScaleAspectFill;
 
-            MentaUnifiedNativeExpressAd *nativeExpressAd = [[MentaUnifiedNativeExpressAd alloc] initWithConfig:config];
+            MentaMediationNativeExpress *nativeExpressAd = [[MentaMediationNativeExpress alloc] initWithPlacementID:slotID];
             nativeExpressAd.delegate = customEvent;
             
             request.customObject = nativeExpressAd;
             [nativeExpressAd loadAd];
         } else {
             // 自渲染
-            MUNativeConfig *config = [[MUNativeConfig alloc] init];
-            config.slotId = slotID;
-            
-            MentaUnifiedNativeAd *nativeAd = [[MentaUnifiedNativeAd alloc] initWithConfig:config];
+            MentaMediationNativeSelfRender *nativeAd = [[MentaMediationNativeSelfRender alloc] initWithPlacementID:slotID];
             nativeAd.delegate = customEvent;
             
             request.customObject = nativeAd;
@@ -191,17 +178,26 @@
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
     NSLog(@"------> menta native ad win");
+    if ([customObject isKindOfClass:MentaMediationNativeExpress.class]) {
+        MentaMediationNativeExpress *nativeExpressAd = (MentaMediationNativeExpress *)customObject;
+        [nativeExpressAd sendWinnerNotification];
+    } else {
+        MentaMediationNativeSelfRender *nativeAd = (MentaMediationNativeSelfRender *)customObject;
+        [nativeAd sendWinnerNotification];
+    }
 }
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
     NSLog(@"------> menta native ad loss");
-    if ([customObject isKindOfClass:MentaUnifiedNativeExpressAd.class]) {
-        MentaUnifiedNativeExpressAd *nativeExpressAd = (MentaUnifiedNativeExpressAd *)customObject;
-        [nativeExpressAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
+    if ([customObject isKindOfClass:MentaMediationNativeExpress.class]) {
+        MentaMediationNativeExpress *nativeExpressAd = (MentaMediationNativeExpress *)customObject;
+        double ecpm = price.doubleValue * 100;
+        [nativeExpressAd sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
     } else {
-        MentaUnifiedNativeAd *nativeAd = (MentaUnifiedNativeAd *)customObject;
-        [nativeAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
+        MentaMediationNativeSelfRender *nativeAd = (MentaMediationNativeSelfRender *)customObject;
+        double ecpm = price.doubleValue * 100;
+        [nativeAd sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
     }
 }
 
@@ -211,9 +207,10 @@
                      Key:(NSString *)appKey
               completion:(void (^)(void))completion {
     NSLog(@"------> start init menta sdk");
-    [MUAPI startWithAppID:appID
-                   appKey:appKey
-              finishBlock:^(BOOL success, NSError * _Nullable error) {
+    [[MentaAdSDK shared] setLogLevel:kMentaLogLevelDebug];
+    [[MentaAdSDK shared] startWithAppID:appID
+                                 appKey:appKey
+                            finishBlock:^(BOOL success, NSError * _Nullable error) {
         if (success && completion != nil) {
             completion();
         }

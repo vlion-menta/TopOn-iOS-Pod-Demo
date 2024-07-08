@@ -6,17 +6,17 @@
 //
 
 #import <AnyThinkNative/AnyThinkNative.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaNativeCustomEvent : ATNativeADCustomEvent <MentaUnifiedNativeExpressAdDelegate, MentaUnifiedNativeAdDelegate>
+@interface AnyThinkMentaNativeCustomEvent : ATNativeADCustomEvent <MentaMediationNativeExpressDelegate, MentaNativeSelfRenderDelegate>
 
-- (void)nativeExpressAdLoadedWith:(MentaUnifiedNativeExpressAd *)nativeExpressAd
-               nativeExpressAdObj:(MentaUnifiedNativeExpressAdObject *)nativeExpressAdObj;
+- (void)nativeExpressAdLoadedWith:(MentaMediationNativeExpress *)nativeExpresAd
+              nativeExpressAdView:(UIView *)nativeExpressAdView;
 
-- (void)nativeAdLoadedWith:(MentaUnifiedNativeAd *)nativeAd
-               nativeAdObj:(MentaNativeObject *)nativeObj;
+- (void)nativeSelfRenderAdLoadedWith:(MentaMediationNativeSelfRender *)nativeSelfRenderAd
+             nativeSelfRenderAdModel:(MentaMediationNativeSelfRenderModel *)nativeSelfRenderAdModel;
 
 @end
 

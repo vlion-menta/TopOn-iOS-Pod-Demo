@@ -7,7 +7,7 @@
 
 #import "AnyThinkMentaNativeRender.h"
 #import <AnyThinkSDK/ATAdManagement.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 @protocol ATNativeADView<NSObject>
 @property (nonatomic, readonly) ATNativeADCache *nativeAd;
@@ -34,34 +34,44 @@
     ATNativeADCache *cache = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd));
     BOOL isExpress = [cache.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
     if (!isExpress) {
-        MentaNativeObject *nativeAd = cache.assets[kATAdAssetsCustomObjectKey];
-        if (nativeAd.dataObject.isVideo) {
-            return nativeAd.nativeAdView.mentaMediaView;
+        MentaMediationNativeSelfRenderModel *selfRenderModel = cache.assets[kATAdAssetsCustomObjectKey];
+//        MentaNativeObject *nativeAd = cache.assets[kATAdAssetsCustomObjectKey];
+        if (selfRenderModel.isVideo) {
+            return selfRenderModel.selfRenderView.mediaView;
         }
     }
     return nil;
 }
 
--(void) renderOffer:(ATNativeADCache *)offer {
+-(void)renderOffer:(ATNativeADCache *)offer {
     [super renderOffer:offer];
     
     BOOL isExpress = [offer.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
     if (isExpress) {
-        MentaUnifiedNativeExpressAdObject *expressObj = offer.assets[kATAdAssetsCustomObjectKey];
-        expressObj.expressView.backgroundColor = self.ADView.backgroundColor;
-        CGFloat height = self.ADView.frame.size.height;
-        expressObj.expressView.frame = CGRectMake(0, 0, self.ADView.frame.size.width, height);
+        AnyThinkMentaNativeCustomEvent *customEvent = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd)).assets[kATAdAssetsCustomEventKey];
+        MentaMediationNativeExpress *nativeExpress = (MentaMediationNativeExpress *)offer.assets[@"kMentaNativeExpressObj"];
+        nativeExpress.delegate = customEvent;
         
-        [self.ADView insertSubview:(UIView *)expressObj.expressView atIndex:0];
+        UIView *nativeExpressView = offer.assets[kATAdAssetsCustomObjectKey];
+        nativeExpressView.backgroundColor = self.ADView.backgroundColor;
+        CGFloat height = self.ADView.frame.size.height;
+        nativeExpressView.frame = CGRectMake(0, 0, self.ADView.frame.size.width, height);
+        
+        [self.ADView insertSubview:nativeExpressView atIndex:0];
         
     } else {
-        MentaNativeObject *nativeAd = offer.assets[kATAdAssetsCustomObjectKey];
-        nativeAd.nativeAdView.backgroundColor = self.ADView.backgroundColor;
+        AnyThinkMentaNativeCustomEvent *customEvent = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd)).assets[kATAdAssetsCustomEventKey];
+        MentaMediationNativeSelfRender *nativeSelfRender = (MentaMediationNativeSelfRender *)offer.assets[@"kMentaNativeSelfRenderObj"];
+        nativeSelfRender.delegate = customEvent;
+        
+        MentaMediationNativeSelfRenderModel *selfRenderModel = offer.assets[kATAdAssetsCustomObjectKey];
+        selfRenderModel.selfRenderView.backgroundColor = [UIColor clearColor];
         [self.ADView setNeedsLayout];
         [self.ADView layoutIfNeeded];
-        nativeAd.nativeAdView.frame = self.ADView.bounds;
-        [nativeAd registerClickableViews:[self.ADView clickableViews] closeableViews:@[]];
-        [self.ADView insertSubview:(UIView *)nativeAd.nativeAdView atIndex:0];
+        selfRenderModel.selfRenderView.frame = self.ADView.bounds;
+        [selfRenderModel.selfRenderView inMediation:YES];
+        [selfRenderModel.selfRenderView menta_registerClickableViews:[self.ADView clickableViews] closeableViews:@[]];
+        [self.ADView insertSubview:selfRenderModel.selfRenderView atIndex:0];
     }
 }
 
@@ -69,8 +79,8 @@
     ATNativeADCache *cache = ((ATNativeADCache*)(((id<ATNativeADView>)self.ADView).nativeAd));
     BOOL isExpress = [cache.assets[kATNativeADAssetsIsExpressAdKey] boolValue];
     if (!isExpress) {
-        MentaNativeObject *nativeAd = cache.assets[kATAdAssetsCustomObjectKey];
-        if (nativeAd.dataObject.isVideo) {
+        MentaMediationNativeSelfRenderModel *selfRenderModel = cache.assets[kATAdAssetsCustomObjectKey];
+        if (selfRenderModel.isVideo) {
             return YES;
         }
     }
