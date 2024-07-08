@@ -80,6 +80,7 @@
                 }
             } else {
                 strongSelf.customEvent = [[AnyThinkMentaNativeCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
+                strongSelf.customEvent.networkAdvertisingID = slotID;
                 strongSelf.customEvent.requestCompletionBlock = completion;
                 if (isExpress) {
                     CGSize adSize = CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) - 20.0, 300.0f);

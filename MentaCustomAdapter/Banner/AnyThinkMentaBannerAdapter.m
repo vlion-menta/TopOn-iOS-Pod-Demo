@@ -70,6 +70,7 @@
             }
             
             strongSelf.customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
+            strongSelf.customEvent.networkAdvertisingID = slotID;
             strongSelf.customEvent.requestCompletionBlock = completion;
             strongSelf.customEvent.UUID = requestUUID;
             
