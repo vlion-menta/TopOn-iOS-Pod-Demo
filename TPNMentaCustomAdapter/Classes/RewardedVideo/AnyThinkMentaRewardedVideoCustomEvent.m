@@ -135,6 +135,7 @@
 -(void)menta_rewardVideoClosed:(MentaMediationRewardVideo *)rewardVideo {
     NSLog(@"------> %s", __FUNCTION__);
     [self trackRewardedVideoAdCloseRewarded:self.rewardGranted extra:@{kATADDelegateExtraDismissTypeKey:self.closeType != 0 ? @(self.closeType) : @(ATAdCloseUnknow)}];
+    [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:self.networkAdvertisingID];
 }
 
 - (NSString *)networkUnitId {

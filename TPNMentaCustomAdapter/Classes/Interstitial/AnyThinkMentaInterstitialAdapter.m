@@ -78,6 +78,7 @@
                 [[AnyThinkMentaBiddingManager sharedInstance] removeRequestItmeWithUnitID:slotID];
             } else {
                 strongSelf.customEvent = [[AnyThinkMentaInterstitialCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
+                strongSelf.customEvent.networkAdvertisingID = slotID;
                 strongSelf.customEvent.requestCompletionBlock = completion;
 
                 strongSelf.interstitialAd = [[MentaMediationInterstitial alloc] initWithPlacementID:slotID];
