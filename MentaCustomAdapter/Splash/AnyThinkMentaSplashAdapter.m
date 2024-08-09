@@ -63,7 +63,6 @@
     if (tolerateTimeout > 0) {
         self.customEvent = [[AnyThinkMentaSplashCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
         self.customEvent.requestCompletionBlock = completion;
-        self.customEvent.delegate = self.delegateToBePassed;
         
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:slotID];
         if (request) { //竞价失败不会进入该方法，所以处理竞价成功的逻辑
@@ -74,11 +73,10 @@
                     // 返回加载完成
                     NSLog(@"------> menta bidding success");
                     delegate.requestCompletionBlock = completion;
-                    delegate.delegate = self.delegateToBePassed;
                     delegate.isReady = YES;
                     [delegate trackSplashAdLoaded:self.splashView];
                 } else {
-                    NSError *error = [NSError errorWithDomain:ATADLoadingErrorDomain code:ATADLoadingErrorCodeThirdPartySDKNotImportedProperly userInfo:@{NSLocalizedDescriptionKey:@"menta has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}];
+                    NSError *error = [NSError errorWithDomain:ATADLoadingErrorDomain code:1001 userInfo:@{NSLocalizedDescriptionKey:@"menta has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}];
                     // 返回加载失败
                     [delegate trackSplashAdLoadFailed:error];
                 }
@@ -94,7 +92,7 @@
             });
         }
     } else {
-        completion(nil, [NSError errorWithDomain:ATADLoadingErrorDomain code:ATADLoadingErrorCodeThirdPartySDKNotImportedProperly userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}]);
+        completion(nil, [NSError errorWithDomain:ATADLoadingErrorDomain code:1001 userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}]);
     }
 }
 
