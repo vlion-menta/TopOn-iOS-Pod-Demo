@@ -231,11 +231,11 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
     [_offer destory];
     _offer = nil;
     
-    ATShowConfig *showConfig = ATShowConfig.new;
-    showConfig.showCustomExt = @"testShowCustomExt";
-    self.offer = [[ATAdManager sharedManager] mediaVideoObjectWithPlacementID:self.placementID showConfig:showConfig];
-    [self.offer showWithPlacementID:self.placementID];
-    self.isTapPlay = YES;
+//    ATShowConfig *showConfig = ATShowConfig.new;
+//    showConfig.showCustomExt = @"testShowCustomExt";
+//    self.offer = [[ATAdManager sharedManager] mediaVideoObjectWithPlacementID:self.placementID showConfig:showConfig];
+//    [self.offer showWithPlacementID:self.placementID];
+//    self.isTapPlay = YES;
 }
 
 #pragma mark - lazy
@@ -474,8 +474,8 @@ typedef NS_ENUM(NSUInteger, ATMediaVideoViewControllerType) {
     
     if (!self.offer) {
         ATShowConfig *showConfig = ATShowConfig.new;
-        showConfig.showCustomExt = @"testShowCustomExt";
-        self.offer = [[ATAdManager sharedManager] mediaVideoObjectWithPlacementID:self.placementID showConfig:showConfig];
+//        showConfig.showCustomExt = @"testShowCustomExt";
+//        self.offer = [[ATAdManager sharedManager] mediaVideoObjectWithPlacementID:self.placementID showConfig:showConfig];
     }
     [self.offer start];
 }
