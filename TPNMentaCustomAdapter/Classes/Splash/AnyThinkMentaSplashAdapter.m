@@ -63,7 +63,6 @@
     if (tolerateTimeout > 0) {
         self.customEvent = [[AnyThinkMentaSplashCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
         self.customEvent.requestCompletionBlock = completion;
-        self.customEvent.delegate = self.delegateToBePassed;
         
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:slotID];
         if (request) { //竞价失败不会进入该方法，所以处理竞价成功的逻辑
@@ -74,7 +73,6 @@
                     // 返回加载完成
                     NSLog(@"------> menta bidding success");
                     delegate.requestCompletionBlock = completion;
-                    delegate.delegate = self.delegateToBePassed;
                     delegate.isReady = YES;
                     [delegate trackSplashAdLoaded:self.splash];
                 } else {

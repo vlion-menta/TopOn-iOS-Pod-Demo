@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
   s.source_files = 'TPNMentaCustomAdapter/Classes/**/*'
   
-  s.dependency 'TPNiOS', '~> 6.3.54'
-  # s.dependency 'AnyThinkiOS', '~> 6.3.54'
+  # s.dependency 'TPNiOS', '6.3.57'
+  s.dependency 'AnyThinkiOS', '~> 6.3.57'
   s.dependency 'MentaBaseGlobal', '1.0.6'
   s.dependency 'MentaMediationGlobal', '1.0.6'
   s.dependency 'MentaVlionGlobal', '1.0.6'
