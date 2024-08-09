@@ -76,7 +76,7 @@
                     delegate.isReady = YES;
                     [delegate trackSplashAdLoaded:self.splash];
                 } else {
-                    NSError *error = [NSError errorWithDomain:ATADLoadingErrorDomain code:ATADLoadingErrorCodeThirdPartySDKNotImportedProperly userInfo:@{NSLocalizedDescriptionKey:@"menta has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}];
+                    NSError *error = [NSError errorWithDomain:ATADLoadingErrorDomain code:1001 userInfo:@{NSLocalizedDescriptionKey:@"menta has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}];
                     // 返回加载失败
                     [delegate trackSplashAdLoadFailed:error];
                 }
@@ -92,7 +92,7 @@
             });
         }
     } else {
-        completion(nil, [NSError errorWithDomain:ATADLoadingErrorDomain code:ATADLoadingErrorCodeThirdPartySDKNotImportedProperly userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}]);
+        completion(nil, [NSError errorWithDomain:ATADLoadingErrorDomain code:10001 userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to load splash.", NSLocalizedFailureReasonErrorKey:@"It took too long to load placement stragety."}]);
     }
 }
 
