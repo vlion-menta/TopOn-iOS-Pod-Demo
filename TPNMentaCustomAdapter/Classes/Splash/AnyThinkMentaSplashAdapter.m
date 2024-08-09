@@ -99,15 +99,20 @@
 // 外部调用了show的API后，来到该方法。请实现三方平台的展示逻辑。
 + (void)showSplash:(ATSplash *)splash localInfo:(NSDictionary*)localInfo delegate:(id<ATSplashDelegate>)delegate {
     MentaMediationSplash *splashAd = splash.customObject;
+    UIWindow *window = (UIWindow *)localInfo[@"window"];
+    if (!window) {
+        NSLog(@"------> nil window");
+        return;
+    }
     if ([splashAd.delegate isKindOfClass:AnyThinkMentaSplashCustomEvent.class]) {
         AnyThinkMentaSplashCustomEvent *event = (AnyThinkMentaSplashCustomEvent *)splashAd.delegate;
         if (event.isReady) {
-            [splashAd showAdInWindow:UIApplication.sharedApplication.keyWindow];
+            [splashAd showAdInWindow:window];
         }
     } else if ([splashAd.delegate isKindOfClass:AnyThinkMentaSplashBiddingDelegate.class]) {
         AnyThinkMentaSplashBiddingDelegate *delegate = (AnyThinkMentaSplashBiddingDelegate *)splashAd.delegate;
         if (delegate.isReady) {
-            [splashAd showAdInWindow:UIApplication.sharedApplication.keyWindow];
+            [splashAd showAdInWindow:window];
         }
     }
 }
