@@ -44,6 +44,10 @@
         self.biddingPrice = [NSString stringWithFormat:@"%f", ecpm / 100];
     }
     
+    if (bannerAdView) {
+        bannerAdView.frame = CGRectMake(0, 0, self.width, self.height);
+    }
+    
     if (self.isC2SBiding && [banner isAdReady]) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.UUID];
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID

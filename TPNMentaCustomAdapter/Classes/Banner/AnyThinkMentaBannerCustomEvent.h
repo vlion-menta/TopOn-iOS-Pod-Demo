@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AnyThinkMentaBannerCustomEvent : ATBannerCustomEvent <MentaMediationBannerDelegate>
 
 @property (nonatomic, strong) NSString *UUID;
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat height;
 
 @end
 

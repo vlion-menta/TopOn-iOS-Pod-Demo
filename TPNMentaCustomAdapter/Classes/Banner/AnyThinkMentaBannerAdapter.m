@@ -46,8 +46,15 @@
     NSString *appID = serverInfo[appIDKey];
     NSString *appKey = serverInfo[@"appKey"];
     NSString *slotID = serverInfo[@"slotID"];
-//    CGFloat width = [NSString stringWithFormat:@"%@", serverInfo[@"width"]].doubleValue;
-//    CGFloat height = [NSString stringWithFormat:@"%@", serverInfo[@"height"]].doubleValue;
+    
+    CGFloat width = 320;
+    CGFloat height = 50;
+    id size = localInfo[kATAdLoadingExtraBannerAdSizeKey];
+    if (size && [size isKindOfClass:NSValue.class]) {
+        CGSize bannerSize = [(NSValue *)size CGSizeValue];
+        width = bannerSize.width;
+        height = bannerSize.height;
+    }
     NSString *bidId = serverInfo[kATAdapterCustomInfoBuyeruIdKey];
     NSString *requestUUID = serverInfo[@"tracking_info_request_id"];
     
@@ -70,6 +77,8 @@
             }
             
             strongSelf.customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:serverInfo localInfo:localInfo];
+            strongSelf.customEvent.width = width;
+            strongSelf.customEvent.height = height;
             strongSelf.customEvent.networkAdvertisingID = slotID;
             strongSelf.customEvent.requestCompletionBlock = completion;
             strongSelf.customEvent.UUID = requestUUID;
@@ -102,12 +111,22 @@
     NSString *appID = info[appIDKey];
     NSString *appKey = info[@"appKey"];
     NSString *slotID = info[@"slotID"];
-//    CGFloat width = [NSString stringWithFormat:@"%@", info[@"width"]].doubleValue;
-//    CGFloat height = [NSString stringWithFormat:@"%@", info[@"height"]].doubleValue;
+    
+    CGFloat width = 320;
+    CGFloat height = 50;
+    id size = info[kATAdLoadingExtraBannerAdSizeKey];
+    if (size && [size isKindOfClass:NSValue.class]) {
+        CGSize bannerSize = [(NSValue *)size CGSizeValue];
+        width = bannerSize.width;
+        height = bannerSize.height;
+    }
+    
     NSString *requestUUID = info[@"tracking_info_request_id"];
     
     [AnyThinkMentaBannerAdapter initMentaSDKWith:appID Key:appKey completion:^{
         AnyThinkMentaBannerCustomEvent *customEvent = [[AnyThinkMentaBannerCustomEvent alloc] initWithInfo:info localInfo:info];
+        customEvent.width = width;
+        customEvent.height = height;
         customEvent.isC2SBiding = YES;
         customEvent.networkAdvertisingID = slotID;
         customEvent.UUID = requestUUID;
