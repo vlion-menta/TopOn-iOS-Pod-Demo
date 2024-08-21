@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'TPNMentaCustomAdapter'
-  s.version          = '1.0.9'
+  s.version          = '1.0.10'
   s.summary          = 'TPNMentaCustomAdapter.'
   s.description      = 'A short description of TPNMentaCustomAdapter'
   s.homepage         = 'https://github.com/jdy/TopOnDemo-global'
@@ -13,10 +13,10 @@ Pod::Spec.new do |s|
   s.source_files = 'TPNMentaCustomAdapter/Classes/**/*'
   
   # s.dependency 'TPNiOS', '6.3.57'
-  s.dependency 'AnyThinkiOS', '6.3.57'
-  s.dependency 'MentaBaseGlobal', '~> 1.0.9'
-  s.dependency 'MentaMediationGlobal', '~> 1.0.9'
-  s.dependency 'MentaVlionGlobal', '~> 1.0.9'
-  s.dependency 'MentaVlionGlobalAdapter', '~> 1.0.9'
+  s.dependency 'AnyThinkiOS', '~> 6.3.62'
+  s.dependency 'MentaBaseGlobal', '~> 1.0.10'
+  s.dependency 'MentaMediationGlobal', '~> 1.0.10'
+  s.dependency 'MentaVlionGlobal', '~> 1.0.10'
+  s.dependency 'MentaVlionGlobalAdapter', '~> 1.0.10'
 
 end
