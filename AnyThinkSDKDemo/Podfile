@@ -32,7 +32,7 @@ target 'AnyThinkSDKDemo' do
   use_frameworks!
   
   # 国内
-  pod 'AnyThinkiOS','6.3.57'
+  # pod 'AnyThinkiOS','6.3.57'
   # pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
   
   # pod 'MentaUnifiedSDK',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaUnifiedSDK.podspec'
