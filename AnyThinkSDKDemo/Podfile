@@ -49,6 +49,6 @@ target 'AnyThinkSDKDemo' do
     # pod 'MentaMediationGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaMediationGlobal.podspec'
     # pod 'MentaBaseGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaBaseGlobal.podspec'
   
-  pod 'TianmuSDK'
+    pod 'TianmuSDK'
 
 end 
