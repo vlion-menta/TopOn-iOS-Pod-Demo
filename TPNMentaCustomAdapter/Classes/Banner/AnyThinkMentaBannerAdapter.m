@@ -64,9 +64,9 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:requestUUID];
-            NSLog(@"------> bidding load success %@ - customevent %@", requestUUID, request.customEvent);
             
             if (bidId && request != nil && request.customObject) {
+                NSLog(@"------> bidding load success %@ - customevent %@", requestUUID, request.customEvent);
                 AnyThinkMentaBannerCustomEvent *customEvent = (AnyThinkMentaBannerCustomEvent *)request.customEvent;
                 customEvent.requestCompletionBlock = completion;
                 MentaMediationBanner *bannerAd = (MentaMediationBanner *)request.customObject;
