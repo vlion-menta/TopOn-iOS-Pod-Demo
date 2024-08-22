@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   
   # s.dependency 'TPNiOS', '6.3.57'
   s.dependency 'AnyThinkiOS', '~> 6.3.62'
-  s.dependency 'MentaBaseGlobal', '~> 1.0.11'
-  s.dependency 'MentaMediationGlobal', '~> 1.0.11'
+  s.dependency 'MentaBaseGlobal', '~> 1.0.11.1'
+  s.dependency 'MentaMediationGlobal', '~> 1.0.11.1'
   s.dependency 'MentaVlionGlobal', '~> 1.0.11'
   s.dependency 'MentaVlionGlobalAdapter', '~> 1.0.11'
 
