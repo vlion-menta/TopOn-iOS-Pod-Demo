@@ -29,6 +29,7 @@
 /// 横幅(banner)广告物料下载成功
 - (void)menta_bannerAdMaterialDidLoad:(MentaUnifiedBannerAd *_Nonnull)bannerAd {
     NSLog(@"------> %s", __FUNCTION__);
+    
     if (self.isC2SBiding && [bannerAd fetchBannerView]) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.UUID];
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID

@@ -6,7 +6,7 @@
 //
 
 #import "AnyThinkMentaNativeRender.h"
-#import <AnyThinkSDK/ATAdManagement.h>
+#import <AnyThinkSDK/AnyThinkSDK.h>
 #import <MentaUnifiedSDK/MentaUnifiedSDK.h>
 
 @protocol ATNativeADView<NSObject>
