@@ -101,6 +101,12 @@
     }
 }
 
++(void)showBanner:(ATBanner*)banner inView:(UIView*)view presentingViewController:(UIViewController*)viewController {
+    NSLog(@"------> show banner view");
+    MentaUnifiedBannerAd *bannerAd = (MentaUnifiedBannerAd *)banner.bannerView;
+    [bannerAd showInContainer:view];
+}
+
 #pragma mark - AlexC2SBiddingRequestProtocol
 + (void)bidRequestWithPlacementModel:(nonnull ATPlacementModel *)placementModel 
                       unitGroupModel:(nonnull ATUnitGroupModel *)unitGroupModel
