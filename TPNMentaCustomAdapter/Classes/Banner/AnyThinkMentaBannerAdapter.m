@@ -170,6 +170,14 @@
     }
 }
 
++(void)showBanner:(ATBanner* )banner inView:(UIView* )view presentingViewController:(UIViewController* )viewController {
+    MentaMediationBanner *bannerAd = (MentaMediationBanner *)banner.bannerView;
+    NSLog(@"------> show banner view");
+    if ([bannerAd isAdReady]) {
+        [view addSubview:bannerAd.bannerAdView];
+    }
+}
+
 #pragma mark - private method
 
 + (void)initMentaSDKWith:(NSString*)appID

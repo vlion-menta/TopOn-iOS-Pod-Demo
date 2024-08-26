@@ -64,7 +64,7 @@
         }
         self.isC2SBiding = NO;
     } else if ([banner isAdReady]) {
-        [self trackBannerAdLoaded:bannerAdView adExtra:nil];
+        [self trackBannerAdLoaded:banner adExtra:nil];
     }
 }
 
