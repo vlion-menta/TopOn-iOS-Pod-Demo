@@ -71,7 +71,7 @@
                 customEvent.requestCompletionBlock = completion;
                 MentaMediationBanner *bannerAd = (MentaMediationBanner *)request.customObject;
                 if ([bannerAd isAdReady]) {
-                    [customEvent trackBannerAdLoaded:bannerAd.bannerAdView adExtra:nil];
+                    [customEvent trackBannerAdLoaded:bannerAd adExtra:nil];
                 }
                 return;
             }
