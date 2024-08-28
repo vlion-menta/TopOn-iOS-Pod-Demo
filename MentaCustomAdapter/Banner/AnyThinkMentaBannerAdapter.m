@@ -72,7 +72,7 @@
                 customEvent.requestCompletionBlock = completion;
                 MentaUnifiedBannerAd *bannerAd = (MentaUnifiedBannerAd *)request.customObject;
                 if ([bannerAd fetchBannerView]) {
-                    [customEvent trackBannerAdLoaded:[bannerAd fetchBannerView] adExtra:nil];
+                    [customEvent trackBannerAdLoaded:bannerAd adExtra:nil];
                 }
                 return;
             }
