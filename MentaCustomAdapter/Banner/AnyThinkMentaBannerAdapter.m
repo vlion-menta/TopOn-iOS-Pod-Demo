@@ -165,6 +165,10 @@
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
     NSLog(@"------> menta banner ad win");
+    if ([customObject isKindOfClass:MentaUnifiedBannerAd.class]) {
+        MentaUnifiedBannerAd *ad = (MentaUnifiedBannerAd *)customObject;
+        [ad sendWinNotification];
+    }
 }
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
