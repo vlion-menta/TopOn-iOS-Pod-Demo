@@ -33,12 +33,12 @@ target 'AnyThinkSDKDemo' do
   
   # 国内
   # pod 'AnyThinkiOS','6.3.62'
-  pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
+  # pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
   
-  pod 'MentaVlionBaseSDK', '6.00.03'
-  pod 'MentaUnifiedSDK',   '6.00.03'
-  pod 'MentaVlionSDK',     '6.00.03'
-  pod 'MentaVlionAdapter', '6.00.03'
+  # pod 'MentaVlionBaseSDK', '6.00.03'
+  # pod 'MentaUnifiedSDK',   '6.00.03'
+  # pod 'MentaVlionSDK',     '6.00.03'
+  # pod 'MentaVlionAdapter', '6.00.03'
   
   # pod 'MentaUnifiedSDK',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaUnifiedSDK.podspec'
   # pod 'MentaVlionBaseSDK', :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionBaseSDK.podspec'
@@ -48,7 +48,13 @@ target 'AnyThinkSDKDemo' do
   #海外
 
     # pod 'TPNiOS', '6.3.54'
-    # pod 'TPNMentaCustomAdapter', :path => '../TPNMentaCustomAdapter.podspec'
+    pod 'TPNMentaCustomAdapter', :path => '../TPNMentaCustomAdapter.podspec'
+    
+    pod 'MentaBaseGlobal',         '1.0.14'
+    pod 'MentaVlionGlobal',        '1.0.14'
+    pod 'MentaMediationGlobal',    '1.0.14'
+    pod 'MentaVlionGlobalAdapter', '1.0.14'
+
     # pod 'MentaVlionGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaVlionGlobal.podspec'
     # pod 'MentaVlionGlobalAdapter', :path => '/Users/jdy/Desktop/Menta-Global/MentaVlionGlobalAdapter.podspec'
     # pod 'MentaMediationGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaMediationGlobal.podspec'
