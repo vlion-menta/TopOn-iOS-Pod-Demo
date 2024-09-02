@@ -32,6 +32,7 @@
 + (void)showRewardedVideo:(ATRewardedVideo*)rewardedVideo 
          inViewController:(UIViewController*)viewController
                  delegate:(id<ATRewardedVideoDelegate>)delegate {
+    rewardedVideo.customEvent.delegate = delegate;
     [((MentaUnifiedRewardVideoAd *)rewardedVideo.customObject) showAdFromRootViewController:viewController];
 }
 
