@@ -32,6 +32,7 @@
 + (void)showInterstitial:(ATInterstitial*)interstitial
         inViewController:(UIViewController*)viewController
                 delegate:(id<ATInterstitialDelegate>)delegate {
+    interstitial.customEvent.delegate = delegate;
     [((MentaMediationInterstitial *)interstitial.customObject) showAdFromRootViewController:viewController];
 }
 - (instancetype)initWithNetworkCustomInfo:(NSDictionary*)serverInfo localInfo:(NSDictionary*)localInfo {
