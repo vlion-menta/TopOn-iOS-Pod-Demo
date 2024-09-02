@@ -139,7 +139,7 @@
 }
 
 - (NSString *)networkUnitId {
-    return self.serverInfo[@"slot_id"];
+    return self.serverInfo[@"slotID"];
 }
 
 - (void)dealloc {

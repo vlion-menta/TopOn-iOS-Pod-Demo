@@ -19,7 +19,7 @@
 @implementation AnyThinkMentaRewardedVideoCustomEvent
 
 - (NSString *)networkUnitId {
-    return self.serverInfo[@"slot_id"];
+    return self.serverInfo[@"slotID"];
 }
 
 /// 广告策略服务加载成功
