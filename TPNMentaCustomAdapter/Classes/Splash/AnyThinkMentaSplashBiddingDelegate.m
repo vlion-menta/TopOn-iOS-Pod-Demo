@@ -10,7 +10,7 @@
 #import <MentaMediationGlobal/MentaMediationGlobal-umbrella.h>
 
 @interface AnyThinkMentaSplashBiddingDelegate () <MentaMediationSplashDelegate>
-@property (nonatomic, strong) NSString *biddingPrice;
+
 @end
 
 @implementation AnyThinkMentaSplashBiddingDelegate
@@ -38,12 +38,6 @@
 // 此时可以获取 ecpm
 - (void)menta_splashAdRenderSuccess:(MentaMediationSplash *)splash {
     self.isReady = YES;
-    double ecpm = splash.eCPM.doubleValue;
-    if (ecpm > 0) {
-        self.biddingPrice = [NSString stringWithFormat:@"%f", ecpm / 100.0];
-    } else {
-        self.biddingPrice = @"0";
-    }
     
     // 拿到unitID的 ATTMBiddingRequest 对象
     AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.placementID];
@@ -54,9 +48,9 @@
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:self.biddingPrice
-                                                     currencyType:ATBiddingCurrencyTypeCNY
-                                               expirationInterval:request.unitGroup.bidTokenTime 
+                                                            price:splash.eCPM
+                                                     currencyType:ATBiddingCurrencyTypeUS
+                                               expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:splash];
         // 绑定对应后台下发的 firm id
         bidInfo.networkFirmID = request.unitGroup.networkFirmID;

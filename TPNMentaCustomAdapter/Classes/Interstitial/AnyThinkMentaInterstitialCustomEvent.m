@@ -11,7 +11,6 @@
 @interface AnyThinkMentaInterstitialCustomEvent ()
 
 @property (nonatomic, assign) BOOL isReady;
-@property (nonatomic, strong) NSString *biddingPrice;
 
 @end
 
@@ -41,17 +40,13 @@
 - (void)menta_interstitialRenderSuccess:(MentaMediationInterstitial *)interstitial {
     NSLog(@"------> %s", __FUNCTION__);
     self.isReady = YES;
-    double ecpm = interstitial.eCPM.doubleValue;
-    if (ecpm > 0) {
-        self.biddingPrice = [NSString stringWithFormat:@"%f", ecpm / 100];
-    }
     if (self.isC2SBiding) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:self.biddingPrice
-                                                     currencyType:ATBiddingCurrencyTypeCNY
+                                                            price:interstitial.eCPM
+                                                     currencyType:ATBiddingCurrencyTypeUS
                                                expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:interstitial];
         bidInfo.networkFirmID = request.unitGroup.networkFirmID;

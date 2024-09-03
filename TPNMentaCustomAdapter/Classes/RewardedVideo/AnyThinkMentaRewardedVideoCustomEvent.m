@@ -11,7 +11,6 @@
 @interface AnyThinkMentaRewardedVideoCustomEvent ()
 
 @property (nonatomic, assign) BOOL isReady;
-@property (nonatomic, strong) NSString *biddingPrice;
 
 @end
 
@@ -45,10 +44,6 @@
 - (void)menta_rewardVideoRenderSuccess:(MentaMediationRewardVideo *)rewardVideo {
     NSLog(@"------> %s", __FUNCTION__);
     self.isReady = YES;
-    double ecpm = rewardVideo.eCPM.doubleValue;
-    if (ecpm > 0) {
-        self.biddingPrice = [NSString stringWithFormat:@"%f", ecpm / 100];
-    }
     if (self.isC2SBiding) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
         if (request == nil) {
@@ -57,8 +52,9 @@
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:self.biddingPrice
-                                                     currencyType:ATBiddingCurrencyTypeCNY expirationInterval:request.unitGroup.bidTokenTime
+                                                            price:rewardVideo.eCPM
+                                                     currencyType:ATBiddingCurrencyTypeUS
+                                               expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:rewardVideo];
         bidInfo.networkFirmID = request.unitGroup.networkFirmID;
         if (request.bidCompletion) {

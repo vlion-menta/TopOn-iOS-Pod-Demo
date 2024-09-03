@@ -10,8 +10,6 @@
 
 @interface AnyThinkMentaBannerCustomEvent ()
 
-@property (nonatomic, strong) NSString *biddingPrice;
-
 @end
 
 @implementation AnyThinkMentaBannerCustomEvent
@@ -39,10 +37,6 @@
 // 此时可以获取 ecpm
 - (void)menta_bannerAdRenderSuccess:(MentaMediationBanner *)banner bannerAdView:(UIView *)bannerAdView {
     NSLog(@"------> %s", __FUNCTION__);
-    double ecpm = banner.eCPM.doubleValue;
-    if (ecpm > 0) {
-        self.biddingPrice = [NSString stringWithFormat:@"%f", ecpm / 100];
-    }
     
     if (bannerAdView) {
         bannerAdView.frame = CGRectMake(0, 0, self.width, self.height);
@@ -53,8 +47,8 @@
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:self.biddingPrice
-                                                     currencyType:ATBiddingCurrencyTypeCNY
+                                                            price:banner.eCPM
+                                                     currencyType:ATBiddingCurrencyTypeUS
                                                expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:banner];
         bidInfo.networkFirmID = request.unitGroup.networkFirmID;

@@ -108,12 +108,11 @@
     if (self.isC2SBiding) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
         request.nativeAds = @[nativeExpressView];
-        NSNumber *price = @(nativeExpress.eCPM.doubleValue / 100.0);
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:price.stringValue
-                                                     currencyType:ATBiddingCurrencyTypeCNY
+                                                            price:nativeExpress.eCPM
+                                                     currencyType:ATBiddingCurrencyTypeUS
                                                expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:nativeExpress];
         bidInfo.networkFirmID = request.unitGroup.networkFirmID;
@@ -172,12 +171,11 @@
     if (self.isC2SBiding) {
         AnyThinkMentaBiddingRequest *request = [[AnyThinkMentaBiddingManager sharedInstance] getRequestItemWithUnitID:self.networkAdvertisingID];
         request.nativeAds = nativeSelfRenderAds;
-        NSNumber *price = @(nativeSelfRenderAds.firstObject.eCPM.doubleValue / 100.0);
         ATBidInfo *bidInfo = [ATBidInfo bidInfoC2SWithPlacementID:request.placementID
                                                   unitGroupUnitID:request.unitGroup.unitID
                                                adapterClassString:request.unitGroup.adapterClassString
-                                                            price:price.stringValue
-                                                     currencyType:ATBiddingCurrencyTypeCNY
+                                                            price:nativeSelfRenderAds.firstObject.eCPM
+                                                     currencyType:ATBiddingCurrencyTypeUS
                                                expirationInterval:request.unitGroup.bidTokenTime
                                                      customObject:nativeSelfRender];
         bidInfo.networkFirmID = request.unitGroup.networkFirmID;
