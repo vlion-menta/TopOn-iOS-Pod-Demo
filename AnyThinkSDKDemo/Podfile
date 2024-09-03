@@ -50,10 +50,10 @@ target 'AnyThinkSDKDemo' do
     # pod 'TPNiOS', '6.3.54'
     pod 'TPNMentaCustomAdapter', :path => '../TPNMentaCustomAdapter.podspec'
     
-    pod 'MentaBaseGlobal',         '1.0.14'
-    pod 'MentaVlionGlobal',        '1.0.14'
-    pod 'MentaMediationGlobal',    '1.0.14'
-    pod 'MentaVlionGlobalAdapter', '1.0.14'
+    # pod 'MentaBaseGlobal',         '1.0.14'
+    # pod 'MentaVlionGlobal',        '1.0.14'
+    # pod 'MentaMediationGlobal',    '1.0.14'
+    # pod 'MentaVlionGlobalAdapter', '1.0.14'
 
     # pod 'MentaVlionGlobal', :path => '/Users/jdy/Desktop/Menta-Global/MentaVlionGlobal.podspec'
     # pod 'MentaVlionGlobalAdapter', :path => '/Users/jdy/Desktop/Menta-Global/MentaVlionGlobalAdapter.podspec'
