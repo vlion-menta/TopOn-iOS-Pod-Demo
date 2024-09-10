@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'AnyThinkMentaCustomAdapterInland'
-    s.version          = '6.00.04'
+    s.version          = '6.00.04.1'
     s.summary          = 'AnyThinkMentaCustomAdapterInland.'
     s.description      = 'This is the AnyThinkMentaCustomAdapterInland. Please proceed to https://www.mentamob.com for more information.'
     s.homepage         = 'https://www.mentamob.com/'
