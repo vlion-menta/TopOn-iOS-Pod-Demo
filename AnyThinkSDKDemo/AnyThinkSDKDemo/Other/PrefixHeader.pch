@@ -44,12 +44,12 @@
 
 
 // 国内
-//#define kTopOnAppID @"a66139b008c636"
-//#define kTopOnAppKey @"aed503d8200feb80e5ac7f005980f011f"
+#define kTopOnAppID @"a66139b008c636"
+#define kTopOnAppKey @"aed503d8200feb80e5ac7f005980f011f"
 
 // 海外
-#define kTopOnAppID @"a6686435dd33b7"
-#define kTopOnAppKey @"a03748828b35a5d24325b4fb197ebe026"
+//#define kTopOnAppID @"a6686435dd33b7"
+//#define kTopOnAppKey @"a03748828b35a5d24325b4fb197ebe026"
 
 #define KTopOnSplashSceneID @"f5e549727efc49"
 #define KTopOnBannerSceneID @"f5e549727efc49"

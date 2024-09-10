@@ -52,8 +52,8 @@
 
 - (NSDictionary<NSString *,NSString *> *)placementIDs_native {
     return @{
-//        @"AdVlion":                   @"b6618d67879ca6", // 国内
-        @"Menta": @"b66864461b4b89", // 海外
+        @"AdVlion":                   @"b66e0137068752", // 国内
+//        @"Menta": @"b66864461b4b89", // 海外
     };
 }
 
