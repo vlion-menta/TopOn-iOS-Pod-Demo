@@ -10,14 +10,14 @@
 #import "AnyThinkMentaRewardedVideoCustomEventInland.h"
 #import "AnyThinkMentaBiddingManagerInland.h"
 
-@interface AnyThinkMentaRewardedVideoAdapter ()
+@interface AnyThinkMentaRewardedVideoAdapterInland ()
 
 @property (nonatomic, strong) AnyThinkMentaRewardedVideoCustomEventInland *customEvent;
 @property (nonatomic, strong) MentaUnifiedRewardVideoAd *rewardedVideo;
 
 @end
 
-@implementation AnyThinkMentaRewardedVideoAdapter
+@implementation AnyThinkMentaRewardedVideoAdapterInland
 
 + (BOOL)adReadyWithCustomObject:(id)customObject info:(NSDictionary*)info {
     MentaUnifiedRewardVideoAd *rewardedVideo = (MentaUnifiedRewardVideoAd *)customObject;
@@ -47,7 +47,7 @@
         NSString *appKey = serverInfo[@"appKey"];
         
         if (![MUAPI isInitialized]) {
-            [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:nil];
+            [AnyThinkMentaRewardedVideoAdapterInland initMentaSDKWith:appID Key:appKey completion:nil];
         }
     }
     return self;
@@ -104,7 +104,7 @@
     if ([MUAPI isInitialized]) {
         load();
     } else {
-        [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:^{
+        [AnyThinkMentaRewardedVideoAdapterInland initMentaSDKWith:appID Key:appKey completion:^{
             load();
         }];
     }
@@ -153,7 +153,7 @@
     if ([MUAPI isInitialized]) {
         startRequest();
     } else {
-        [AnyThinkMentaRewardedVideoAdapter initMentaSDKWith:appID Key:appKey completion:^{
+        [AnyThinkMentaRewardedVideoAdapterInland initMentaSDKWith:appID Key:appKey completion:^{
             startRequest();
         }];
     }

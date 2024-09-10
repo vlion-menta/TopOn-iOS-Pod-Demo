@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AnyThinkMentaRewardedVideoAdapter : NSObject
+@interface AnyThinkMentaRewardedVideoAdapterInland : NSObject
 
 @property (nonatomic,copy) void (^metaDataDidLoadedBlock)(void);
 
