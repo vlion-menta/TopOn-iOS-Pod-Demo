@@ -50,6 +50,7 @@
     NSString *appID = serverInfo[appIDKey];
     NSString *appKey = serverInfo[@"appKey"];
     NSString *slotID = serverInfo[@"slotID"];
+    id bottomView = localInfo[@"container_view"];
     
     if ((!appID || !appKey || !slotID) && completion != nil) {
         NSError *err = [NSError errorWithDomain:@"com.menta.mediation.ios"
@@ -85,7 +86,7 @@
         } else {
             // 普通瀑布流的广告配置，进行加载广告
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.splashView = [AnyThinkMentaSplashAdapter initSplashAdWith:slotID];
+                self.splashView = [AnyThinkMentaSplashAdapter initSplashAdWith:slotID bottomView:bottomView];
                 self.splashView.delegate = self.customEvent;
                 [self.splashView loadAd];
                 
@@ -99,15 +100,20 @@
 // 外部调用了show的API后，来到该方法。请实现三方平台的展示逻辑。
 + (void)showSplash:(ATSplash *)splash localInfo:(NSDictionary*)localInfo delegate:(id<ATSplashDelegate>)delegate {
     MentaUnifiedSplashAd *splashAd = splash.customObject;
+    UIWindow *window = (UIWindow *)localInfo[@"window"];
+    if (!window) {
+        window = UIApplication.sharedApplication.keyWindow;
+        return;
+    }
     if ([splashAd.delegate isKindOfClass:AnyThinkMentaSplashCustomEvent.class]) {
         AnyThinkMentaSplashCustomEvent *event = (AnyThinkMentaSplashCustomEvent *)splashAd.delegate;
         if (event.isReady) {
-            [splashAd showInWindow:UIApplication.sharedApplication.keyWindow];
+            [splashAd showInWindow:window];
         }
     } else if ([splashAd.delegate isKindOfClass:AnyThinkMentaSplashBiddingDelegate.class]) {
         AnyThinkMentaSplashBiddingDelegate *delegate = (AnyThinkMentaSplashBiddingDelegate *)splashAd.delegate;
         if (delegate.isReady) {
-            [splashAd showInWindow:UIApplication.sharedApplication.keyWindow];
+            [splashAd showInWindow:window];
         }
     }
 }
@@ -140,6 +146,7 @@
     NSString *appID = info[appIDKey];
     NSString *appKey = info[@"appKey"];
     NSString *slotID = info[@"slotID"];
+    id bottomView = info[@"container_view"];
     
     if ((!appID || !appKey || !slotID) && completion != nil) {
         NSError *err = [NSError errorWithDomain:@"com.menta.mediation.ios"
@@ -149,6 +156,7 @@
         return;
     }
         
+    
     __weak __typeof(self)weakSelf = self;
     [AnyThinkMentaSplashAdapter initMentaSDKWith:appID Key:appKey completion:^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -161,7 +169,7 @@
         request.extraInfo = info;
         request.adType = MentaAdFormatSplash;
         
-        MentaUnifiedSplashAd *splashAd = [strongSelf initSplashAdWith:slotID];
+        MentaUnifiedSplashAd *splashAd = [strongSelf initSplashAdWith:slotID bottomView:bottomView];
         
         request.customObject = splashAd;
         [[AnyThinkMentaBiddingManager sharedInstance] startWithRequestItem:request];
@@ -202,12 +210,15 @@
     }];
 }
 
-+ (MentaUnifiedSplashAd *)initSplashAdWith:(NSString *)slotID {
++ (MentaUnifiedSplashAd *)initSplashAdWith:(NSString *)slotID bottomView:(id)bottomView {
     MUSplashConfig *config = [MUSplashConfig new];
     config.slotId = slotID;
     config.adSize = [UIScreen mainScreen].bounds.size;
     config.tolerateTime = 5;
     config.materialFillMode = MentaSplashAdMaterialFillMode_ScaleAspectFill;
+    if (bottomView && [bottomView isKindOfClass:[UIView class]]) {
+        config.bottomView = (UIView *)bottomView;
+    }
     return [[MentaUnifiedSplashAd alloc] initWithConfig:config];
 }
 
