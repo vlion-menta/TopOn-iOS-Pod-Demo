@@ -78,7 +78,10 @@
     [self.view addSubview:self.textView];
     [self.view addSubview:self.footView];
     
-    _adSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 250.0f);
+    CGFloat scale = 320 / 50;
+    CGFloat width = CGRectGetWidth(self.view.bounds);
+    CGFloat height = width / scale;
+    _adSize = CGSizeMake(CGRectGetWidth(self.view.bounds), height);
     
     [self.modelBackView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
