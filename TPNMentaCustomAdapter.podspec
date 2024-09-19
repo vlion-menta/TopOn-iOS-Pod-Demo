@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'TPNMentaCustomAdapter'
-  s.version          = '1.0.15'
+  s.version          = '1.0.17'
   s.summary          = 'TPNMentaCustomAdapter.'
   s.description      = 'A short description of TPNMentaCustomAdapter'
   s.homepage         = 'https://github.com/jdy/TopOnDemo-global'
