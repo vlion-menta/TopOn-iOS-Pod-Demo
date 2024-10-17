@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
-    s.name             = 'AnyThinkMentaCustomAdapterInland'
+    s.name             = 'TPNMentaCustomAdapterInland'
     s.version          = '6.00.14'
-    s.summary          = 'AnyThinkMentaCustomAdapterInland.'
-    s.description      = 'This is the AnyThinkMentaCustomAdapterInland. Please proceed to https://www.mentamob.com for more information.'
+    s.summary          = 'TPNMentaCustomAdapterInland.'
+    s.description      = 'This is the TPNMentaCustomAdapterInland. Please proceed to https://www.mentamob.com for more information.'
     s.homepage         = 'https://www.mentamob.com/'
     s.license          = "Custom"
     s.author           = { 'wzy' => 'wangzeyong@mentamob.com' }
