@@ -35,7 +35,7 @@ target 'AnyThinkSDKDemo' do
   # pod 'AnyThinkiOS','6.3.62'
   # pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
   # pod 'AnyThinkMentaCustomAdapterInland', :path => '../AnyThinkMentaCustomAdapterInland.podspec'
-  pod 'TPNMentaCustomAdapterInland', :path => '../TPNMentaCustomAdapterInland.podspec'
+#  pod 'TPNMentaCustomAdapterInland', :path => '../TPNMentaCustomAdapterInland.podspec'
   
   # pod 'MentaVlionBaseSDK', '6.00.03'
   # pod 'MentaUnifiedSDK',   '6.00.03'
@@ -51,6 +51,7 @@ target 'AnyThinkSDKDemo' do
 
     # pod 'TPNiOS', '6.3.54'
     # pod 'TPNMentaCustomAdapter', :path => '../TPNMentaCustomAdapter.podspec'
+    pod 'TPNMentaCustomAdapterNew', :path => '../TPNMentaCustomAdapterNew.podspec'
     
     # pod 'MentaBaseGlobal',         '1.0.14'
     # pod 'MentaVlionGlobal',        '1.0.14'
