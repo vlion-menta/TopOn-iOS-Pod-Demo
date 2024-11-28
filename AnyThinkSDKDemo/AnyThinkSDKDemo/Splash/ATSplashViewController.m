@@ -270,7 +270,14 @@
         // 自定义跳过按钮倒计时回调间隔
         [mutableDict setValue:@500 forKey:kATSplashExtraCountdownIntervalKey];
         */
-        [[ATAdManager sharedManager] showSplashWithPlacementID:self.placementID scene:KTopOnSplashSceneID window:mainWindow inViewController:self extra:mutableDict delegate:self];
+//        [[ATAdManager sharedManager] showSplashWithPlacementID:self.placementID scene:KTopOnSplashSceneID window:mainWindow inViewController:self extra:mutableDict delegate:self];
+        
+        [[ATAdManager sharedManager] showSplashWithPlacementID:self.placementID
+                                                        config:[[ATShowConfig alloc] init]
+                                                        window:mainWindow
+                                              inViewController:self
+                                                         extra:mutableDict
+                                                      delegate:self];
     }
 }
 
