@@ -180,10 +180,10 @@
     NSLog(@"------> menta native ad win");
     if ([customObject isKindOfClass:MentaMediationNativeExpress.class]) {
         MentaMediationNativeExpress *nativeExpressAd = (MentaMediationNativeExpress *)customObject;
-        [nativeExpressAd sendWinnerNotification];
+        [nativeExpressAd sendWinnerNotificationWith:nil];
     } else {
         MentaMediationNativeSelfRender *nativeAd = (MentaMediationNativeSelfRender *)customObject;
-        [nativeAd sendWinnerNotification];
+        [nativeAd sendWinnerNotificationWith:nil];
     }
 }
 
@@ -193,11 +193,11 @@
     if ([customObject isKindOfClass:MentaMediationNativeExpress.class]) {
         MentaMediationNativeExpress *nativeExpressAd = (MentaMediationNativeExpress *)customObject;
         double ecpm = price.doubleValue * 100;
-        [nativeExpressAd sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
+        [nativeExpressAd sendLossNotificationWithWinnerPrice:[NSString stringWithFormat:@"%f", ecpm] info:@{@"loss_reason": @"101"}];
     } else {
         MentaMediationNativeSelfRender *nativeAd = (MentaMediationNativeSelfRender *)customObject;
         double ecpm = price.doubleValue * 100;
-        [nativeAd sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
+        [nativeAd sendLossNotificationWithWinnerPrice:[NSString stringWithFormat:@"%f", ecpm] info:@{@"loss_reason": @"101"}];
     }
 }
 

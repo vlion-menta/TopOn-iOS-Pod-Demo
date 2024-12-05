@@ -156,7 +156,7 @@
     NSLog(@"------> menta banner ad win");
     if ([customObject isKindOfClass:MentaMediationBanner.class]) {
         MentaMediationBanner *ad = (MentaMediationBanner *)customObject;
-        [ad sendWinnerNotification];
+        [ad sendWinnerNotificationWith:nil];
     }
 }
 
@@ -166,7 +166,7 @@
     if ([customObject isKindOfClass:MentaMediationBanner.class]) {
         MentaMediationBanner *ad = (MentaMediationBanner *)customObject;
         double ecpm = price.doubleValue *100;
-        [ad sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
+        [ad sendLossNotificationWithWinnerPrice:[NSString stringWithFormat:@"%f", ecpm] info:@{@"loss_reason": @"101"}];
     }
 }
 

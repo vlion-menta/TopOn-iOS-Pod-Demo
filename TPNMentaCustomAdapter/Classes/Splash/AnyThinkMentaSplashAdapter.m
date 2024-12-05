@@ -179,7 +179,7 @@
     NSLog(@"------> menta splash ad win");
     if ([customObject isKindOfClass:MentaMediationSplash.class]) {
         MentaMediationSplash *splashAd = (MentaMediationSplash *)customObject;
-        [splashAd sendWinnerNotification];
+        [splashAd sendWinnerNotificationWith:nil];
     }
 }
 
@@ -189,7 +189,7 @@
     if ([customObject isKindOfClass:MentaMediationSplash.class]) {
         MentaMediationSplash *splashAd = (MentaMediationSplash *)customObject;
         double ecpm = price.doubleValue * 100;
-        [splashAd sendLossNotificationWith:[NSString stringWithFormat:@"%f", ecpm]];
+        [splashAd sendLossNotificationWithWinnerPrice:[NSString stringWithFormat:@"%f", ecpm] info:@{@"loss_reason": @"101"}];
     }
 }
 
