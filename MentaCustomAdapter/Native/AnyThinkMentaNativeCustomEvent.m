@@ -65,10 +65,9 @@
             CGFloat videoAspect = nativeObj.dataObject.videoWidth / nativeObj.dataObject.videoHeight;
             [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(videoAspect) forKey:kATNativeADAssetsVideoAspectRatioKey];
             [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.videoDuration) forKey:kATNativeADAssetsVideoDurationKey];
-        } else {
-            [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialWidth) forKey:kATNativeADAssetsMainImageWidthKey];
-            [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialHeight) forKey:kATNativeADAssetsMainImageHeightKey];
         }
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialWidth) forKey:kATNativeADAssetsMainImageWidthKey];
+        [AnyThinkMentaNativeCustomEvent dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialHeight) forKey:kATNativeADAssetsMainImageHeightKey];
         
         [assets addObject:asset];
         [self trackNativeAdLoaded:assets];
