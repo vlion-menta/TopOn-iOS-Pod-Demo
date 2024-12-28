@@ -62,8 +62,9 @@
         [AnyThinkMentaNativeCustomEventInland dic:asset setValue:nativeObj.dataObject.adIcon forKey:kATNativeADAssetsLogoImageKey];
         [AnyThinkMentaNativeCustomEventInland dic:asset setValue:nativeObj.dataObject.price forKey:kATNativeADAssetsAppPriceKey];
         if (nativeObj.dataObject.isVideo) {
-            CGFloat videoAspect = nativeObj.nativeAdView.videoWidth / nativeObj.nativeAdView.videoHeight;
+            CGFloat videoAspect = nativeObj.dataObject.videoWidth / nativeObj.dataObject.videoHeight;
             [AnyThinkMentaNativeCustomEventInland dic:asset setValue:@(videoAspect) forKey:kATNativeADAssetsVideoAspectRatioKey];
+            [AnyThinkMentaNativeCustomEventInland dic:asset setValue:@(nativeObj.dataObject.videoDuration) forKey:kATNativeADAssetsVideoDurationKey];
         } else {
             [AnyThinkMentaNativeCustomEventInland dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialWidth) forKey:kATNativeADAssetsMainImageWidthKey];
             [AnyThinkMentaNativeCustomEventInland dic:asset setValue:@(nativeObj.dataObject.materialList.firstObject.materialHeight) forKey:kATNativeADAssetsMainImageHeightKey];
