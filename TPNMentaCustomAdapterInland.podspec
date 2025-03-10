@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'TPNMentaCustomAdapterInland'
-    s.version          = '6.00.28'
+    s.version          = '6.00.29'
     s.summary          = 'TPNMentaCustomAdapterInland.'
     s.description      = 'This is the TPNMentaCustomAdapterInland. Please proceed to https://www.mentamob.com for more information.'
     s.homepage         = 'https://www.mentamob.com/'
@@ -16,10 +16,10 @@ Pod::Spec.new do |s|
   
     s.source_files = 'MentaCustomAdapterInland/**/*'
 
-    s.dependency 'MentaVlionBaseSDK', '~> 6.00.28'
-    s.dependency 'MentaUnifiedSDK',   '~> 6.00.28'
-    s.dependency 'MentaVlionSDK',     '~> 6.00.28'
-    s.dependency 'MentaVlionAdapter', '~> 6.00.28'
+    s.dependency 'MentaVlionBaseSDK', '~> 6.00.29'
+    s.dependency 'MentaUnifiedSDK',   '~> 6.00.29'
+    s.dependency 'MentaVlionSDK',     '~> 6.00.29'
+    s.dependency 'MentaVlionAdapter', '~> 6.00.29'
     s.dependency 'TPNiOS'
   
   end
