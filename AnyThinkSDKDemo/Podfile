@@ -35,17 +35,32 @@ target 'AnyThinkSDKDemo' do
   # pod 'AnyThinkiOS','6.3.62'
   # pod 'AnyThinkMentaCustomAdapter', :path => '../AnyThinkMentaCustomAdapter.podspec'
   pod 'AnyThinkMentaCustomAdapterInland', :path => '../AnyThinkMentaCustomAdapterInland.podspec'
+  pod 'AnyThinkKuaiShouSDKAdapter','6.4.55'
 #  pod 'TPNMentaCustomAdapterInland', :path => '../TPNMentaCustomAdapterInland.podspec'
   
-  # pod 'MentaVlionBaseSDK', '6.00.03'
-  # pod 'MentaUnifiedSDK',   '6.00.03'
-  # pod 'MentaVlionSDK',     '6.00.03'
-  # pod 'MentaVlionAdapter', '6.00.03'
+  #  pod 'MentaVlionBaseSDK', '6.00.30'
+  #  pod 'MentaUnifiedSDK',   '6.00.30'
+  #  pod 'MentaVlionSDK',     '6.00.30'
+  #  pod 'MentaVlionAdapter', '6.00.30'
+  #  pod 'MentaKSAdapter',    '6.00.30.1'
+   
   
-  # pod 'MentaUnifiedSDK',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaUnifiedSDK.podspec'
-  # pod 'MentaVlionBaseSDK', :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionBaseSDK.podspec'
-  # pod 'MentaVlionSDK',     :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionSDK.podspec'
-  # pod 'MentaVlionAdapter', :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionAdapter.podspec'
+ pod 'MentaUnifiedSDK',    :path => '/Users/jdy/Desktop/Menta-iOS/MentaUnifiedSDK.podspec'
+ pod 'MentaVlionBaseSDK',  :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionBaseSDK.podspec'
+ pod 'MentaVlionSDK',      :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionSDK.podspec'
+ pod 'MentaVlionAdapter',  :path => '/Users/jdy/Desktop/Menta-iOS/MentaVlionAdapter.podspec'
+ pod 'MentaKSAdapter',     :path => '/Users/jdy/Desktop/Menta-iOS/MentaKSAdapter.podspec'
+
+# pod 'MentaJDYunAdapter',  :path => '/Users/jdy/Desktop/Menta-iOS/MentaJDYunAdapter.podspec'
+# pod 'MentaBaiduAdapter',  :path => '/Users/jdy/Desktop/Menta-iOS/MentaBaiduAdapter.podspec'
+# pod 'MentaGDTAdapter',    :path => '/Users/jdy/Desktop/Menta-iOS/MentaGDTAdapter.podspec'
+# pod 'MentaTanxAdapter',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaTanxAdapter.podspec'
+# pod 'MentaCSJAdapter',    :path => '/Users/jdy/Desktop/Menta-iOS/MentaCSJAdapter.podspec'
+# pod 'MentaSigmobAdapter', :path => '/Users/jdy/Desktop/Menta-iOS/MentaSigmobAdapter.podspec'
+# pod 'MentaIFLYAdapter',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaIFLYAdapter.podspec'
+# pod 'MentaWXminiAdapter', :path => '/Users/jdy/Desktop/Menta-iOS/MentaWXminiAdapter.podspec'
+# pod 'MentaMeishuAdapter', :path => '/Users/jdy/Desktop/Menta-iOS/MentaMeishuAdapter.podspec'
+# pod 'MentaJumoAdapter',   :path => '/Users/jdy/Desktop/Menta-iOS/MentaJumoAdapter.podspec'
   
   #海外
 
