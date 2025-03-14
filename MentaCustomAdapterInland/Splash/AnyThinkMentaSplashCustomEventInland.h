@@ -7,7 +7,7 @@
 //
 
 #import <AnyThinkSplash/AnyThinkSplash.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaUnifiedSDK/MentaUnifiedSDK-umbrella.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

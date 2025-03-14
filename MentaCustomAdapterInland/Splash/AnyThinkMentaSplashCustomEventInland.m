@@ -7,6 +7,7 @@
 //
 
 #import "AnyThinkMentaSplashCustomEventInland.h"
+#import <MentaVlionBaseSDK/MentaVlionBaseSDK-umbrella.h>
 
 @interface AnyThinkMentaSplashCustomEventInland ()
 
@@ -20,48 +21,48 @@
 - (void)menta_splashAdDidLoad:(MentaUnifiedSplashAd *_Nonnull)splashAd {
     self.isReady = YES;
     [self trackSplashAdLoaded:splashAd];
-    NSLog(@"------> menta_splashAdDidLoad ");
+    MentaLog(@"------> menta_splashAdDidLoad ");
 }
 
 /// 开屏加载失败
 - (void)menta_splashAd:(MentaUnifiedSplashAd *_Nonnull)splashAd didFailWithError:(NSError * _Nullable)error description:(NSDictionary *_Nonnull)description {
     self.isReady = NO;
     [self trackSplashAdLoadFailed:error];
-    NSLog(@"------> didFailWithError %@", error);
+    MentaLog(@"------> didFailWithError %@", error);
 }
 
 /// 开屏广告被点击了
 - (void)menta_splashAdDidClick:(MentaUnifiedSplashAd *_Nonnull)splashAd {
     [self trackSplashAdClick];
-    NSLog(@"------> menta_splashAdDidClick ");
+    MentaLog(@"------> menta_splashAdDidClick ");
 }
 
 /// 开屏广告关闭了
 - (void)menta_splashAdDidClose:(MentaUnifiedSplashAd *_Nonnull)splashAd closeMode:(MentaSplashAdCloseMode)mode {
     [self trackSplashAdClosed:@{}];
-    NSLog(@"------> menta_splashAdDidClose ");
+    MentaLog(@"------> menta_splashAdDidClose ");
 }
 
 /// 开屏广告曝光
 - (void)menta_splashAdDidExpose:(MentaUnifiedSplashAd *_Nonnull)splashAd {
     [self trackSplashAdShow];
-    NSLog(@"------> menta_splashAdDidExpose ");
+    MentaLog(@"------> menta_splashAdDidExpose ");
 
 }
 
 /// 广告策略服务加载成功
 - (void)menta_didFinishLoadingADPolicy:(MentaUnifiedSplashAd *_Nonnull)splashAd {
-    NSLog(@"------> menta_didFinishLoadingADPolicy ");
+    MentaLog(@"------> menta_didFinishLoadingADPolicy ");
 }
 
 /// 开屏广告 展现的广告信息 曝光之后会触发该回调
 - (void)menta_splashAd:(MentaUnifiedSplashAd *_Nonnull)splashAd bestTargetSourcePlatformInfo:(NSDictionary *_Nonnull)info {
-    NSLog(@"------> bestTargetSourcePlatformInfo");
+    MentaLog(@"------> bestTargetSourcePlatformInfo");
 }
 
 - (void)dealloc
 {
-    NSLog(@"------> %s", __FUNCTION__);
+    MentaLog(@"------> %s", __FUNCTION__);
 }
 
 @end

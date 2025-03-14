@@ -7,7 +7,7 @@
 
 #import "AnyThinkMentaNativeRenderInland.h"
 #import <AnyThinkSDK/AnyThinkSDK.h>
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaUnifiedSDK/MentaUnifiedSDK-umbrella.h>
 
 @protocol ATNativeADView<NSObject>
 @property (nonatomic, readonly) ATNativeADCache *nativeAd;
@@ -89,7 +89,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"------> %s", __FUNCTION__);
+    MentaLog(@"------> %s", __FUNCTION__);
 }
 
 @end

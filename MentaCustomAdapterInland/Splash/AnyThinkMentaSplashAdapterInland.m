@@ -6,7 +6,8 @@
 //
 
 #import "AnyThinkMentaSplashAdapterInland.h"
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaUnifiedSDK/MentaUnifiedSDK-umbrella.h>
+#import <MentaVlionBaseSDK/MentaVlionBaseSDK-umbrella.h>
 #import "AnyThinkMentaSplashCustomEventInland.h"
 #import "AnyThinkMentaBiddingManagerInland.h"
 #import "AnyThinkMentaSplashBiddingDelegateInland.h"
@@ -72,7 +73,7 @@
                 AnyThinkMentaSplashBiddingDelegateInland *delegate = (AnyThinkMentaSplashBiddingDelegateInland *)self.splashView.delegate;
                 if (delegate.isReady) {
                     // 返回加载完成
-                    NSLog(@"------> menta bidding success");
+                    MentaLog(@"------> menta bidding success");
                     delegate.requestCompletionBlock = completion;
                     delegate.isReady = YES;
                     [delegate trackSplashAdLoaded:self.splashView];
@@ -138,7 +139,7 @@
                       unitGroupModel:(ATUnitGroupModel*)unitGroupModel
                                 info:(NSDictionary*)info
                           completion:(void(^)(ATBidInfo *bidInfo, NSError *error))completion {
-    NSLog(@"------> menta start bidding");
+    MentaLog(@"------> menta start bidding");
     NSString *appIDKey = @"appid";
     if([info.allKeys containsObject:@"appId"]) {
         appIDKey = @"appId";
@@ -179,7 +180,7 @@
 
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
-    NSLog(@"------> menta splash ad win");
+    MentaLog(@"------> menta splash ad win");
     if ([customObject isKindOfClass:MentaUnifiedSplashAd.class]) {
         MentaUnifiedSplashAd *splashAd = (MentaUnifiedSplashAd *)customObject;
         [splashAd sendWinNotification];
@@ -188,7 +189,7 @@
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
-    NSLog(@"------> menta splash ad loss");
+    MentaLog(@"------> menta splash ad loss");
     if ([customObject isKindOfClass:MentaUnifiedSplashAd.class]) {
         MentaUnifiedSplashAd *splashAd = (MentaUnifiedSplashAd *)customObject;
         [splashAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
@@ -200,7 +201,9 @@
 + (void)initMentaSDKWith:(NSString*)appID
                      Key:(NSString *)appKey
               completion:(void (^)(void))completion {
-    NSLog(@"------> start init menta sdk");
+    MentaLog(@"------> start init menta sdk");
+    [MUAPI enableLog:YES];
+    [MUAPI enableDoubleKs:YES];
     [MUAPI startWithAppID:appID
                    appKey:appKey
               finishBlock:^(BOOL success, NSError * _Nullable error) {
@@ -224,7 +227,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"------> %s", __FUNCTION__);
+    MentaLog(@"------> %s", __FUNCTION__);
 }
 
 @end

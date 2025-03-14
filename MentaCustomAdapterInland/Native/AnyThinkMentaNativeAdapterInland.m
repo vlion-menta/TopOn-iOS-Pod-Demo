@@ -10,7 +10,7 @@
 #import "AnyThinkMentaNativeRenderInland.h"
 #import "AnyThinkMentaBiddingManagerInland.h"
 #import "AnyThinkMentaBiddingRequestInland.h"
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaUnifiedSDK/MentaUnifiedSDK-umbrella.h>
 
 @interface AnyThinkMentaNativeAdapterInland ()
 
@@ -126,7 +126,7 @@
                       unitGroupModel:(ATUnitGroupModel*)unitGroupModel
                                 info:(NSDictionary*)info
                           completion:(void(^)(ATBidInfo *bidInfo, NSError *error))completion {
-    NSLog(@"------> menta start bidding");
+    MentaLog(@"------> menta start bidding");
     NSString *appIDKey = @"appid";
     if([info.allKeys containsObject:@"appId"]) {
         appIDKey = @"appId";
@@ -191,7 +191,7 @@
 
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
-    NSLog(@"------> menta native ad win");
+    MentaLog(@"------> menta native ad win");
     if ([customObject isKindOfClass:MentaUnifiedNativeExpressAd.class]) {
         MentaUnifiedNativeExpressAd *ad = (MentaUnifiedNativeExpressAd *)customObject;
         [ad sendWinNotification];
@@ -203,7 +203,7 @@
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
-    NSLog(@"------> menta native ad loss");
+    MentaLog(@"------> menta native ad loss");
     if ([customObject isKindOfClass:MentaUnifiedNativeExpressAd.class]) {
         MentaUnifiedNativeExpressAd *nativeExpressAd = (MentaUnifiedNativeExpressAd *)customObject;
         [nativeExpressAd sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
@@ -218,7 +218,9 @@
 + (void)initMentaSDKWith:(NSString*)appID
                      Key:(NSString *)appKey
               completion:(void (^)(void))completion {
-    NSLog(@"------> start init menta sdk");
+    MentaLog(@"------> start init menta sdk");
+    [MUAPI enableLog:YES];
+    [MUAPI enableDoubleKs:YES];
     [MUAPI startWithAppID:appID
                    appKey:appKey
               finishBlock:^(BOOL success, NSError * _Nullable error) {
@@ -230,7 +232,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"------> %s", __FUNCTION__);
+    MentaLog(@"------> %s", __FUNCTION__);
 }
 
 @end

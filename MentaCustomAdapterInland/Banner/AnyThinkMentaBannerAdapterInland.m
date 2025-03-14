@@ -8,7 +8,7 @@
 #import "AnyThinkMentaBannerAdapterInland.h"
 #import "AnyThinkMentaBiddingManagerInland.h"
 #import "AnyThinkMentaBannerCustomEventInland.h"
-#import <MentaUnifiedSDK/MentaUnifiedSDK.h>
+#import <MentaUnifiedSDK/MentaUnifiedSDK-umbrella.h>
 
 @interface AnyThinkMentaBannerAdapterInland ()
 
@@ -67,7 +67,7 @@
             AnyThinkMentaBiddingRequestInland *request = [[AnyThinkMentaBiddingManagerInland sharedInstance] getRequestItemWithUnitID:requestUUID];
             
             if (bidId && request != nil && request.customObject) {
-                NSLog(@"------> bidding load success %@ - customevent %@", requestUUID, request.customEvent);
+                MentaLog(@"------> bidding load success %@ - customevent %@", requestUUID, request.customEvent);
                 AnyThinkMentaBannerCustomEventInland *customEvent = (AnyThinkMentaBannerCustomEventInland *)request.customEvent;
                 customEvent.requestCompletionBlock = completion;
                 MentaUnifiedBannerAd *bannerAd = (MentaUnifiedBannerAd *)request.customObject;
@@ -102,7 +102,7 @@
 }
 
 +(void)showBanner:(ATBanner*)banner inView:(UIView*)view presentingViewController:(UIViewController*)viewController {
-    NSLog(@"------> show banner view");
+    MentaLog(@"------> show banner view");
     MentaUnifiedBannerAd *bannerAd = (MentaUnifiedBannerAd *)banner.bannerView;
     [bannerAd showInContainer:view];
 }
@@ -158,13 +158,13 @@
         request.customObject = bannerAd;
         [[AnyThinkMentaBiddingManagerInland sharedInstance] startWithRequestItem:request];;
         [bannerAd loadAd];
-        NSLog(@"------> menta start bidding %@, customevent %@", requestUUID, customEvent);
+        MentaLog(@"------> menta start bidding %@, customevent %@", requestUUID, customEvent);
     }];
 }
 
 //// 返回广告位比价胜利时，第二的价格的回调，可在该回调中向三方平台返回竞胜价格  secondPrice：美元(USD)
 + (void) sendWinnerNotifyWithCustomObject:(id)customObject secondPrice:(NSString*)price userInfo:(NSDictionary<NSString *, NSString *> *)userInfo {
-    NSLog(@"------> menta banner ad win");
+    MentaLog(@"------> menta banner ad win");
     if ([customObject isKindOfClass:MentaUnifiedBannerAd.class]) {
         MentaUnifiedBannerAd *ad = (MentaUnifiedBannerAd *)customObject;
         [ad sendWinNotification];
@@ -173,7 +173,7 @@
 
 //// 返回广告位比价输了的回调，可在该回调中向三方平台返回竞败价格 winPrice：美元(USD)
 + (void)sendLossNotifyWithCustomObject:(nonnull id)customObject lossType:(ATBiddingLossType)lossType winPrice:(nonnull NSString *)price userInfo:(NSDictionary *)userInfo {
-    NSLog(@"------> menta banner ad loss");
+    MentaLog(@"------> menta banner ad loss");
     if ([customObject isKindOfClass:MentaUnifiedBannerAd.class]) {
         MentaUnifiedBannerAd *ad = (MentaUnifiedBannerAd *)customObject;
         [ad sendLossNotificationWithInfo:@{MU_M_L_WIN_PRICE : @([price integerValue] * 100)}];
@@ -185,7 +185,9 @@
 + (void)initMentaSDKWith:(NSString*)appID
                      Key:(NSString *)appKey
               completion:(void (^)(void))completion {
-    NSLog(@"------> start init menta sdk");
+    MentaLog(@"------> start init menta sdk");
+    [MUAPI enableLog:YES];
+    [MUAPI enableDoubleKs:YES];
     [MUAPI startWithAppID:appID
                    appKey:appKey
               finishBlock:^(BOOL success, NSError * _Nullable error) {
@@ -197,7 +199,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"------> %s", __FUNCTION__);
+    MentaLog(@"------> %s", __FUNCTION__);
 }
 
 @end
