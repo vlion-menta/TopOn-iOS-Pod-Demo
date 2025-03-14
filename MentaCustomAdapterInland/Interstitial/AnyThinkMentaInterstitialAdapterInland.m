@@ -177,7 +177,6 @@
               completion:(void (^)(void))completion {
     MentaLog(@"------> start init menta sdk");
     [MUAPI enableLog:YES];
-    [MUAPI enableDoubleKs:YES];
     [MUAPI startWithAppID:appID
                    appKey:appKey
               finishBlock:^(BOOL success, NSError * _Nullable error) {
